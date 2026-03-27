@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ND Vehicle Consultancy | Personal Car Finding and EV Advice</title>
+  <meta name="description" content="Independent car buying advice, bespoke vehicle sourcing, and EV guidance from ND Vehicle Consultancy in Market Harborough." />
+  <style>
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-alt: #eef3f8;
+      --text: #1f2a37;
+      --muted: #52606d;
+      --line: #d9e2ec;
+      --brand: #133b63;
+      --brand-2: #1f7a5c;
+      --brand-3: #0f5b44;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behaviour: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(217, 226, 236, 0.8);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--brand), #2a5f91);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1.1rem;
+      line-height: 1.1;
+    }
+
+    .brand-copy span {
+      display: block;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 0.96rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--brand);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.3rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.98rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand-2), var(--brand-3));
+      color: #fff;
+      box-shadow: 0 12px 26px rgba(31, 122, 92, 0.24);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--brand);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 4rem 0 2.25rem;
+      background:
+        linear-gradient(115deg, rgba(19, 59, 99, 0.94), rgba(19, 59, 99, 0.8) 48%, rgba(19, 59, 99, 0.18) 78%),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      color: #fff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.3rem);
+      line-height: 1.05;
+      margin: 0 0 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      max-width: 45rem;
+      color: rgba(255, 255, 255, 0.92);
+      margin: 0 0 1.25rem;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin: 1.5rem 0;
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-top: 1.6rem;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 28px;
+      padding: 1.5rem;
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card h2 {
+      margin: 0 0 0.6rem;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
+
+    .hero-card ul {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .hero-card li {
+      padding: 0.8rem 0.9rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.1);
+      font-size: 0.98rem;
+    }
+
+    section {
+      padding: 4.2rem 0;
+    }
+
+    .section-head {
+      max-width: 48rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-head h2 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.9rem, 3.3vw, 3rem);
+      line-height: 1.1;
+      color: var(--brand);
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.45rem;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 0.7rem;
+      font-size: 1.2rem;
+      color: var(--brand);
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .calculator-wrap {
+      background: linear-gradient(180deg, #f8fbfd 0%, #edf4f7 100%);
+    }
+
+    .calculator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.6rem;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.3rem;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 0.85rem;
+      align-items: start;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--brand);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .calculator-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+    }
+
+    .calc-top {
+      background: linear-gradient(135deg, var(--brand), #254f77);
+      color: #fff;
+      padding: 1.3rem 1.4rem;
+    }
+
+    .calc-top h3 {
+      margin: 0 0 0.35rem;
+      font-size: 1.3rem;
+    }
+
+    .calc-top p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.86);
+    }
+
+    .calc-body {
+      padding: 1.25rem;
+      display: grid;
+      gap: 0.95rem;
+    }
+
+    .calc-row {
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1rem;
+    }
+
+    .calc-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 0.45rem;
+    }
+
+    .calc-value {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .calc-saving {
+      background: #eef9f4;
+      border-color: #b8e2cf;
+      text-align: center;
+    }
+
+    .calc-saving strong {
+      display: block;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      line-height: 1;
+      color: var(--brand-2);
+      margin: 0.35rem 0;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .bullets {
+      list-style: none;
+      margin: 1rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .bullets li {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 15px;
+      padding: 0.8rem 0.95rem;
+    }
+
+    .bullets-light {
+      list-style: none;
+      margin: 1rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .bullets-light li {
+      position: relative;
+      padding-left: 1.2rem;
+      color: var(--muted);
+    }
+
+    .bullets-light li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--brand-2);
+      font-weight: 800;
+    }
+
+    .dark-panel {
+      background: linear-gradient(135deg, #183652, #254867);
+      color: #fff;
+      border-radius: 28px;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+    }
+
+    .dark-panel h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .dark-panel p,
+    .dark-panel li {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    .quote {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .quote p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .quote footer {
+      margin-top: auto;
+      font-weight: 700;
+      color: var(--brand);
+    }
+
+    .quote footer span {
+      display: block;
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-top: 0.15rem;
+    }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--brand), #264f7a);
+      color: #fff;
+      border-radius: 34px;
+      padding: 2rem;
+      box-shadow: 0 24px 60px rgba(19, 59, 99, 0.22);
+    }
+
+    .cta-band h2 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .cta-band p {
+      margin: 0;
+      max-width: 50rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .cta-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .btn-light {
+      background: #fff;
+      color: var(--brand);
+    }
+
+    .btn-outline-light {
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .site-footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 1.2rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cards-3,
+      .calculator-grid,
+      .two-col,
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(var(--max), calc(100% - 1.2rem));
+      }
+
+      .hero {
+        padding-top: 2.5rem;
+      }
+
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        gap: 0.8rem;
+      }
+
+      .btn,
+      .hero-actions .btn,
+      .cta-actions .btn {
+        width: 100%;
+      }
+
+      .cta-band {
+        padding: 1.4rem;
+      }
+    }
+  
+  .calculator-embed-card {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
+  padding: 1rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.calculator-frame {
+  width: 100%;
+  min-height: 1200px;
+  border: 0;
+  border-radius: 20px;
+  background: #ffffff;
+  display: block;
+}
+  
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="ND Vehicle Consultancy home">
+        <div class="brand-mark">ND</div>
+        <div class="brand-copy">
+          <strong>ND Vehicle Consultancy</strong>
+          <span>Independent car buying advice and bespoke vehicle sourcing</span>
+        </div>
+      </a>
+
+      <div class="nav">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#services">Personal Car Finding</a>
+          <a href="#calculator">EV Advice</a>
+          <a href="#about">About</a>
+          <a href="#fleet">Fleet Support</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="btn btn-primary" href="#contact">Book a Callback</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Personal car finding - EV guidance - Bespoke vehicle sourcing</span>
+          <h1>Find the right car - with independent expert help</h1>
+          <p>
+            Whether you are replacing the family car, exploring your first EV, or searching for something more specialist,
+            ND Vehicle Consultancy offers a personal, independent service to help you buy with more clarity and less stress.
+          </p>
+          <div class="hero-points">
+            <span>Private buyer focused</span>
+            <span>•</span>
+            <span>Independent advice</span>
+            <span>•</span>
+            <span>Local and personal</span>
+          </div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">Request a Callback</a>
+            <a class="btn btn-secondary" href="https://aqcroft.github.io/ev-savings-calculator/ndvc.html" target="_blank" rel="noopener">See What EV Could Save You</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Key benefits">
+          <h2>A more personal way to buy your next car</h2>
+          <p>
+            Independent guidance for private buyers - from everyday family cars to specialist vehicles, with clear support on petrol, diesel, hybrid and EV.
+          </p>
+          <ul>
+            <li>Tailored support based on your budget, lifestyle and driving needs</li>
+            <li>Honest advice that is not tied to dealership stock or sales targets</li>
+            <li>Practical help from shortlist to sourcing and next steps</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <h2>How Nick helps private buyers</h2>
+          <p>
+            The focus is on helping people make smarter, more confident car-buying decisions - with expert advice, market knowledge, and a genuinely tailored approach.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card">
+            <h3>Personal car finding</h3>
+            <p>
+              A tailored search service to help private buyers find the right car for their budget, lifestyle and preferences.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>ICE to EV guidance</h3>
+            <p>
+              Clear, independent advice on whether petrol, diesel, hybrid or electric is the right fit for how you actually drive.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Bespoke vehicle sourcing</h3>
+            <p>
+              From everyday family cars to specialist and harder-to-find vehicles, with support from shortlist through to sourcing.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" class="calculator-wrap">
+      <div class="container calculator-grid">
+        <div>
+          <div class="section-head">
+            <h2>Start with a simple EV savings conversation</h2>
+            <p>
+              Not sure whether electric is right for you? The EV Running Cost Calculator gives visitors a quick, practical starting point before moving into tailored advice and sourcing.
+            </p>
+          </div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div>
+                <strong>Share what you drive now</strong>
+                <div>Use the calculator to compare your current running costs with a likely electric alternative.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">2</div>
+              <div>
+                <strong>Get a quick first estimate</strong>
+                <div>See a simple saving illustration that helps start a more informed discussion.</div>
+              </div>
+            </div>
+
+            <div class="step">
+              <div class="step-number">3</div>
+              <div>
+                <strong>Move to tailored advice</strong>
+                <div>Nick can then help sense-check the real-world options that fit your budget, mileage and lifestyle.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       <div class="calculator-embed-card">
+  <iframe
+    src="https://aqcroft.github.io/ev-savings-calculator/ndvc.html"
+    title="NDVC ICE vs EV Savings Calculator"
+    loading="lazy"
+    class="calculator-frame"
+  ></iframe>
+</div>
+        <section id="about">
+      <div class="container two-col">
+        <div class="card">
+          <div class="section-head" style="margin-bottom: 1rem;">
+            <h2>Experience that builds confidence</h2>
+          </div>
+          <p>
+            Nick combines more than 10 years of vehicle sourcing and funding experience with wider commercial insight from building and managing a 100+ vehicle fleet at Britishvolt.
+          </p>
+          <p>
+            That means private buyers get the reassurance of serious market knowledge, delivered in a much more personal and tailored way.
+          </p>
+          <ul class="bullets-light">
+            <li>Independent buying advice</li>
+            <li>Experience across petrol, diesel, hybrid and EV</li>
+            <li>Support that feels consultative rather than sales-led</li>
+          </ul>
+        </div>
+
+        <div id="fleet" class="dark-panel">
+          <h3>Also available for selected business and fleet support</h3>
+          <p>
+            Fleet consultancy stays on the site, but as a supporting service rather than the headline message.
+          </p>
+          <ul class="bullets">
+            <li>Vehicle procurement and disposal</li>
+            <li>Fleet policy and process guidance</li>
+            <li>Driving at work support</li>
+            <li>Cost reduction and supplier negotiation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>What clients say</h2>
+          <p>Proof points that reinforce the personal, knowledgeable and trusted service Nick is known for.</p>
+        </div>
+
+        <div class="testimonials">
+          <blockquote class="quote">
+            <p>
+              “From start to finish Nick offers an outstanding service. My family and I have used Nick several times over these last years to advise and procure our vehicles through personal and lease funding and we have always been delighted with the service received.”
+            </p>
+            <footer>
+              Steve Thomas
+              <span>Raunds, Northamptonshire</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="quote">
+            <p>
+              “Great experience - Nick Darlow is incredibly knowledgeable about cars and the car market, is scrupulous on detail, and always seems to manage to create a happy experience for all parties.”
+            </p>
+            <footer>
+              Nick Weldon
+              <span>Rushden Jazz School</span>
+            </footer>
+          </blockquote>
+
+          <blockquote class="quote">
+            <p>
+              “The service felt more like how I would expect to be treated when searching for a niche premium vehicle rather than a company car for my small business.”
+            </p>
+            <footer>
+              Nigel Harper
+              <span>Navitas Project Solutions</span>
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="cta-band">
+          <h2>Let’s find the right car for you</h2>
+          <p>
+            Whether you are replacing the family car, exploring EV for the first time, or looking for something more specialist, Nick offers independent advice and a more personal way to buy.
+          </p>
+          <div class="cta-actions">
+            <a class="btn btn-light" href="mailto:hello@ndvc.uk?subject=Website%20enquiry">Request a Callback</a>
+            <a class="btn btn-outline-light" href="https://aqcroft.github.io/ev-savings-calculator/ndvc.html" target="_blank" rel="noopener">Open EV Calculator</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>© ND Vehicle Consultancy</div>
+      <div>Independent car buying advice, EV guidance and bespoke vehicle sourcing</div>
+    </div>
+  </footer>
+</body>
+</html>
