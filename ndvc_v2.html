@@ -20,6 +20,8 @@
       --bg-2: #eeebe3;
       --surface: #ffffff;
       --surface-soft: #faf8f3;
+      --lavender: #D3D3F2;
+      --lavender-soft: #ececff;
       --ink: #1f262c;
       --ink-soft: #55606a;
       --brand: #212a30;
@@ -329,7 +331,7 @@
       position: relative;
       overflow: hidden;
       border-radius: var(--radius-lg);
-      min-height: 560px;
+      min-height: 470px;
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
       background: #ddd;
@@ -339,7 +341,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 67% center;
+      object-position: 72% center;
     }
 
     .hero-media::after {
@@ -437,6 +439,10 @@
       box-shadow: 0 12px 34px rgba(18,24,28,0.07);
     }
 
+    .panel-lavender {
+      background: linear-gradient(180deg, rgba(211,211,242,0.62) 0%, rgba(255,255,255,0.96) 100%);
+    }
+
     .panel p + p {
       margin-top: 12px;
     }
@@ -497,8 +503,8 @@
     }
 
     .service-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(211,211,242,0.72) 0%, rgba(255,255,255,0.98) 100%);
+      border: 1px solid rgba(31,38,44,0.1);
       border-radius: 20px;
       padding: 24px 22px;
       box-shadow: 0 12px 30px rgba(18,24,28,0.06);
@@ -511,11 +517,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--accent-soft);
+      background: rgba(255,255,255,0.7);
       color: #76581c;
       font-size: 20px;
       font-weight: 800;
       margin-bottom: 14px;
+      border: 1px solid rgba(31,38,44,0.08);
     }
 
     .service-card h3 {
@@ -597,7 +604,7 @@
       width: 200px;
       height: 200px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(177,139,66,0.34) 0%, rgba(177,139,66,0) 72%);
+      background: radial-gradient(circle, rgba(211,211,242,0.42) 0%, rgba(211,211,242,0) 72%);
       pointer-events: none;
     }
 
@@ -792,7 +799,6 @@
       color: var(--brand);
     }
 
-    /* Modal calculator */
     .modal-shell {
       position: fixed;
       inset: 0;
@@ -814,17 +820,16 @@
     .modal-dialog {
       position: relative;
       width: min(calc(100vw - 28px), var(--modal-width));
-      max-height: calc(100vh - 30px);
+      height: calc(100vh - 30px);
       margin: 15px auto;
       background: transparent;
-      overflow: visible;
     }
 
     .modal-close {
       position: absolute;
       top: 14px;
-      right: 14px;
-      z-index: 5;
+      left: 14px;
+      z-index: 6;
       width: 40px;
       height: 40px;
       border-radius: 999px;
@@ -849,16 +854,20 @@
       background: #efede6;
       color: var(--ink);
       width: 100%;
+      height: 100%;
       border-radius: 20px;
       box-shadow: 0 30px 90px rgba(18,24,28,0.28);
       border: 1px solid rgba(33,42,48,0.12);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     .calc-hdr {
       background: linear-gradient(180deg, var(--brand) 0%, #28333b 100%);
       color: white;
-      padding: 22px 22px 18px;
+      padding: 22px 22px 18px 66px;
+      flex-shrink: 0;
     }
 
     .calc-hdr h2 {
@@ -921,6 +930,10 @@
 
     .calc-body {
       padding: 18px;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
+      -webkit-overflow-scrolling: touch;
     }
 
     .calc-panel {
@@ -1029,7 +1042,7 @@
       padding: 16px 10px 12px;
       text-align: center;
       cursor: pointer;
-      background: rgba(255,255,255,0.96);
+      background: linear-gradient(180deg, rgba(211,211,242,0.38) 0%, rgba(255,255,255,0.98) 100%);
       transition: all 0.18s ease;
       box-shadow: 0 10px 24px rgba(18,24,28,0.04);
     }
@@ -1041,7 +1054,7 @@
 
     .cbtn.sel {
       border-color: var(--accent);
-      background: #faf3e8;
+      background: linear-gradient(180deg, rgba(244,234,216,0.9) 0%, rgba(255,255,255,1) 100%);
     }
 
     .cbtn .ico {
@@ -1086,7 +1099,7 @@
       gap: 6px;
       font-size: 11px;
       line-height: 1.35;
-      background: rgba(33,42,48,0.06);
+      background: rgba(211,211,242,0.42);
       color: var(--ink);
       padding: 4px 10px;
       border-radius: 999px;
@@ -1532,7 +1545,7 @@
       }
 
       .hero-media {
-        min-height: 460px;
+        min-height: 390px;
       }
     }
 
@@ -1551,7 +1564,7 @@
       }
 
       .hero-media {
-        min-height: 360px;
+        min-height: 320px;
       }
     }
 
@@ -1590,11 +1603,11 @@
       }
 
       .hero-media {
-        min-height: 300px;
+        min-height: 260px;
       }
 
       .hero-media img {
-        object-position: 66% center;
+        object-position: 74% center;
       }
 
       .hero-card {
@@ -1604,25 +1617,96 @@
         border-radius: 0;
       }
 
+      .modal-dialog {
+        width: calc(100vw - 14px);
+        height: calc(100vh - 14px);
+        margin: 7px auto;
+      }
+
+      #evt {
+        border-radius: 18px;
+      }
+
+      .calc-hdr {
+        padding: 22px 14px 16px 58px;
+      }
+
+      .calc-hdr-top img {
+        width: 54px;
+        height: 54px;
+      }
+
       .calc-step {
         font-size: 10px;
         padding: 9px 4px;
       }
 
-      .r2,
-      .cgrid,
-      .tri {
+      .calc-body {
+        padding: 14px;
+      }
+
+      .r2 {
         grid-template-columns: 1fr;
       }
 
-      .modal-dialog {
-        width: calc(100vw - 14px);
-        margin: 7px auto;
-        max-height: calc(100vh - 14px);
+      .cgrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
       }
 
-      .calc-body {
-        padding: 14px;
+      .cbtn {
+        padding: 13px 7px 10px;
+      }
+
+      .cbtn .ico {
+        font-size: 22px;
+        margin-bottom: 6px;
+      }
+
+      .cbtn .cn {
+        font-size: 11px;
+      }
+
+      .cbtn .ce {
+        font-size: 9px;
+      }
+
+      .cbtn .ck {
+        font-size: 10px;
+      }
+
+      .tri {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+
+      .tc {
+        padding: 16px 6px 12px;
+      }
+
+      .tcl {
+        font-size: 9px;
+      }
+
+      .tcv {
+        font-size: 14px;
+      }
+
+      .tcs {
+        font-size: 9px;
+      }
+
+      .badge {
+        font-size: 8px;
+        padding: 2px 5px;
+      }
+
+      .hero-result .hv {
+        font-size: 34px;
+      }
+
+      .bc-footer {
+        align-items: flex-start;
       }
     }
   </style>
@@ -1656,7 +1740,7 @@
       <div class="wrap">
         <div class="hero-grid">
           <div class="hero-copy">
-            <div class="eyebrow">Independent car buying advice - EV guidance - bespoke vehicle sourcing</div>
+            <div class="eyebrow">Independent car buying advice - EV guidance - Bespoke vehicle sourcing</div>
             <h1>Find the right car - with independent expert help</h1>
             <p class="lead">
               Whether you are replacing the family car, exploring your first EV, or searching for something more specialist, ND Vehicle Consultancy offers a personal, independent service to help you buy with more clarity and less stress.
@@ -1704,7 +1788,7 @@
         </div>
 
         <div class="intro-band">
-          <div class="panel">
+          <div class="panel panel-lavender">
             <p>
               The focus is on helping people make smarter, more confident car-buying decisions - with expert advice, market knowledge, and a genuinely tailored approach.
             </p>
@@ -1778,7 +1862,7 @@
         </div>
 
         <div class="calculator-band">
-          <div class="panel">
+          <div class="panel panel-lavender">
             <div class="steps">
               <div class="step">
                 <div class="step-num">1</div>
@@ -1848,7 +1932,7 @@
         </div>
 
         <div class="experience-grid">
-          <div class="panel">
+          <div class="panel panel-lavender">
             <p>
               That means private buyers get the reassurance of serious market knowledge, delivered in a much more personal and tailored way.
             </p>
@@ -1938,7 +2022,6 @@
     </div>
   </footer>
 
-  <!-- Modal calculator -->
   <div class="modal-shell" id="calcModal" aria-hidden="true" role="dialog" aria-labelledby="calcTitle">
     <div class="modal-backdrop" data-close-calculator></div>
 
@@ -1963,7 +2046,6 @@
         </div>
 
         <div class="calc-body">
-          <!-- STEP 1 -->
           <div class="calc-panel active" id="s1">
             <div class="slbl">Tell us about your current car</div>
 
@@ -2017,7 +2099,6 @@
             <button class="btnp" type="button" onclick="go(2)">Next: Your EV Choice →</button>
           </div>
 
-          <!-- STEP 2 -->
           <div class="calc-panel" id="s2">
             <div class="slbl">What EV are you considering?</div>
             <div class="cgrid" id="carGrid"></div>
@@ -2025,7 +2106,6 @@
             <button class="btnp" type="button" onclick="go(3)">See your potential savings →</button>
           </div>
 
-          <!-- STEP 3 -->
           <div class="calc-panel" id="s3">
             <div class="tri" id="tri"></div>
             <div id="heroResult" class="hero-result"></div>
@@ -2089,7 +2169,6 @@
       }
     });
 
-    /* Calculator logic */
     const CARS = [
       { id: "hatch", name: "Family hatchback", eg: "VW ID.3, Nissan Leaf", mpk: 3.8, ico: "🚗" },
       { id: "exec", name: "Executive saloon", eg: "Tesla Model 3, BMW i4", mpk: 3.5, ico: "🚘" },
