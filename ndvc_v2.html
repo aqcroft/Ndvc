@@ -1709,6 +1709,47 @@
         align-items: flex-start;
       }
     }
+
+.uw-bridge{
+  display:grid;
+  grid-template-columns: 1.6fr auto;
+  gap:16px;
+  align-items:center;
+  margin-top:14px;
+  padding:16px 18px;
+  background:#ffffff;
+  border:1px solid rgba(67, 56, 123, 0.10);
+  border-radius:16px;
+}
+
+.uw-bridge-text{
+  font-size:15px;
+  line-height:1.55;
+  color:#234b3a;
+}
+
+.uw-bridge-logo{
+  width:140px;
+  max-width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+}
+
+@media (max-width: 640px){
+  .uw-bridge{
+    grid-template-columns:1fr;
+    text-align:left;
+    gap:12px;
+    padding:14px;
+  }
+
+  .uw-bridge-logo{
+    width:120px;
+    justify-self:start;
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -2117,6 +2158,14 @@
 
             <div id="bc" class="bc acc"></div>
 
+            <div class="uw-bridge">
+  <div class="uw-bridge-text">
+    I've partnered with Utility Warehouse to supply your EV smart tariff and other essential household services - just ask when you get in touch.
+  </div>
+  <img src="assets/UW_logo.webp" alt="Utility Warehouse logo" class="uw-bridge-logo">
+</div>
+
+
             <div class="cta">
               <h3>Ready to explore your options?</h3>
               <p>
@@ -2454,11 +2503,6 @@
             </div>
             <div class="acc-row total"><span>Total</span><span>${fv(evNetA)}</span></div>
           </div>
-        </div>
-
-        <div class="bc-footer">
-          <span>Home charging savings depend on tariff choice. The best outcome usually comes from pairing the right EV with the right home charging setup.</span>
-          <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
         </div>
       `;
 
