@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ND Vehicle Consultancy | Personal Car Finding and EV Advice</title>
+  <meta name="description" content="Independent car buying advice, EV guidance and bespoke vehicle sourcing from ND Vehicle Consultancy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════ */
+    :root {
+      --lav:        #D3D3F2;
+      --lav-light:  #eaeaff;
+      --ink:        #1c2328;
+      --ink-mid:    #3d4a54;
+      --ink-soft:   #5c6b76;
+      --surface:    #ffffff;
+      --surface-2:  #f6f6fc;
+      --brand:      #1e272d;
+      --brand-2:    #2c3840;
+      --cta:        #625EA4;
+      --cta-2:      #504c8a;
+      --gold:       #f0d49a;
+      --amber:      #b18b42;
+      --amber-soft: #f4ead8;
+      --green:      #256346;
+      --green-soft: #e7f3ec;
+      --line:       rgba(28,35,40,0.09);
+      --line-lav:   rgba(98,94,164,0.18);
+      --sh-sm:  0 4px 14px rgba(18,24,28,0.07);
+      --sh-md:  0 12px 32px rgba(18,24,28,0.09);
+      --sh-lg:  0 22px 54px rgba(18,24,28,0.13);
+      --sh-dark:0 18px 48px rgba(18,24,28,0.22);
+      --r-xl: 24px;
+      --r-lg: 18px;
+      --r-md: 12px;
+      --r-sm: 8px;
+      --max-w: 1100px;
+      --hh: 70px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: var(--lav);
+      color: var(--ink);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: min(100%, var(--max-w));
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ═══════════════════════════════════════════
+       TYPOGRAPHY
+    ═══════════════════════════════════════════ */
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--cta);
+      margin-bottom: 12px;
+    }
+
+    .section-eyebrow::before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--cta);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .section-h2 {
+      
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .section-h2-light {
+      
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-lead {
+      font-size: 16px;
+      color: var(--ink-soft);
+      max-width: 60ch;
+      line-height: 1.72;
+    }
+
+    /* ═══════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════ */
+    .btn, .btn-outline, .btn-ghost, .btn-light, .btn-call, .btn-ghost-light {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, transform 0.14s, box-shadow 0.18s;
+      white-space: nowrap;
+    }
+
+    .btn { background: var(--cta); color: white; border-color: var(--cta); box-shadow: 0 4px 18px rgba(98,94,164,0.30); }
+    .btn:hover { background: var(--cta-2); border-color: var(--cta-2); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(98,94,164,0.38); }
+
+    .btn-outline { background: rgba(255,255,255,0.80); color: var(--ink); border-color: var(--line-lav); backdrop-filter: blur(6px); }
+    .btn-outline:hover { background: white; transform: translateY(-1px); }
+
+    .btn-light { background: #25D366; color: white; border-color: #25D366; box-shadow: 0 4px 14px rgba(37,211,102,0.28); }
+    .btn-light:hover { background: #1fba59; }
+
+    .btn-call { background: var(--cta); color: white; border-color: var(--cta); box-shadow: 0 4px 18px rgba(98,94,164,0.30); }
+    .btn-call:hover { background: var(--cta-2); }
+
+    .btn-ghost-light { background: transparent; color: white; border-color: rgba(255,255,255,0.30); }
+    .btn-ghost-light:hover { background: rgba(255,255,255,0.10); }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+    ═══════════════════════════════════════════ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(211,211,242,0.78);
+      border-bottom: 1px solid rgba(98,94,164,0.14);
+    }
+
+    .header-row {
+      min-height: var(--hh);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-lockup { display: flex; align-items: center; gap: 10px; }
+
+    .brand-lockup img {
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      object-fit: contain;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 4px;
+      box-shadow: var(--sh-sm);
+    }
+
+    .brand-text strong { display: block; font-size: 13px; font-weight: 800; color: var(--ink); }
+    .brand-text span   { display: block; font-size: 11px; color: var(--ink-soft); }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero { padding: 40px 0 36px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      background: white;
+      border-radius: var(--r-xl);
+      padding: 40px 36px;
+      box-shadow: var(--sh-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 20px;
+      padding: 5px 13px 5px 9px;
+      border-radius: 999px;
+      background: var(--lav-light);
+      border: 1px solid var(--line-lav);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--cta);
+    }
+
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cta);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .hero h1 {
+      
+      font-size: clamp(34px, 4.2vw, 52px);
+      font-weight: 700;
+      line-height: 1.08;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 em { font-style: italic; color: var(--cta); }
+
+    .hero .lead {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.72;
+      margin-bottom: 28px;
+      max-width: 52ch;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+
+    .hero-trust { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: rgba(211,211,242,0.55);
+      border: 1px solid rgba(98,94,164,0.22);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-mid);
+    }
+
+    .trust-pill::before {
+      content: "✓";
+      font-size: 10px;
+      color: var(--cta);
+      font-weight: 800;
+    }
+
+    .hero-media {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--r-xl);
+      min-height: 480px;
+      box-shadow: var(--sh-lg);
+    }
+
+    .hero-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: 68% center;
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, rgba(30,39,45,0.03) 0%, rgba(30,39,45,0.22) 100%);
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTIONS
+    ═══════════════════════════════════════════ */
+    .section { padding: 36px 0; }
+
+    .card-white {
+      background: white;
+      border-radius: var(--r-xl);
+      box-shadow: var(--sh-md);
+      padding: 28px 26px;
+    }
+
+    .card-dark {
+      background: linear-gradient(150deg, var(--brand) 0%, var(--brand-2) 100%);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r-xl);
+      padding: 26px 22px;
+      box-shadow: var(--sh-dark);
+      color: white;
+    }
+
+    /* ═══════════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════════ */
+    .services-intro {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 0;
+    }
+
+    .service-card h3,
+    h3.service-card {
+      
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 14px 0 10px;
+      line-height: 1.25;
+    }
+
+    .service-card p,
+    p.service-card {
+      font-size: 14px;
+      color: rgba(255,255,255,0.70);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .price-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 20px;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    .about-body { font-size: 16px; color: var(--ink-mid); line-height: 1.75; }
+    .about-body p + p { margin-top: 14px; }
+
+    .check-list { display: grid; gap: 10px; margin-top: 20px; list-style: none; }
+
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--lav-light);
+      border: 1px solid var(--line-lav);
+      color: var(--cta);
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .stat-stack { display: grid; gap: 14px; }
+
+    .stat-card { padding: 22px 20px; }
+
+    .stat-card strong {
+      display: block;
+      
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+
+    .stat-card span {
+      font-size: 13px;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.5;
+    }
+
+    /* ═══════════════════════════════════════════
+       EV SECTION
+    ═══════════════════════════════════════════ */
+    .ev-section { padding: 36px 0 44px; }
+
+    .ev-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .ev-stat-callout {
+      background: white;
+      border-radius: var(--r-lg);
+      padding: 22px 24px;
+      box-shadow: var(--sh-md);
+      border-left: 4px solid var(--cta);
+    }
+
+    .ev-stat-callout .big-num {
+      
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--cta);
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .ev-stat-callout p { font-size: 14px; color: var(--ink-soft); line-height: 1.55; }
+
+    /* ─── INLINE CALCULATOR ─── */
+    #evt {
+      font-family: "Inter", sans-serif;
+      background: white;
+      border-radius: var(--r-xl);
+      box-shadow: var(--sh-lg);
+      overflow: hidden;
+      max-width: 620px;
+    }
+
+    .calc-hdr {
+      background: linear-gradient(150deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      padding: 22px 22px 18px;
+    }
+
+    .calc-hdr-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .calc-hdr h2 { font-size: 16px; font-weight: 700; color: var(--gold); margin-bottom: 3px; }
+    .calc-hdr p  { font-size: 12px; opacity: 0.65; }
+
+    .calc-hdr-top img {
+      width: 52px; height: 52px;
+      object-fit: contain;
+      border-radius: 9px;
+      background: white;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
+
+    .calc-steps {
+      display: flex;
+      border-radius: 9px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.07);
+    }
+
+    .calc-step {
+      flex: 1;
+      text-align: center;
+      padding: 8px 5px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: rgba(255,255,255,0.38);
+      transition: background 0.18s, color 0.18s;
+      line-height: 1.3;
+    }
+
+    .calc-step.active { background: var(--cta); color: white; }
+    .calc-step.done   { color: rgba(255,255,255,0.72); }
+
+    .calc-body { padding: 18px; }
+
+    .calc-body-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+    }
+
+    .calc-body-inner > .calc-panel {
+      grid-area: 1 / 1;
+      visibility: hidden;
+      pointer-events: none;
+      position: relative;
+      z-index: 0;
+    }
+
+    .calc-body-inner > .calc-panel.active {
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 1;
+    }
+
+    .slbl {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .r2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .fld label { display: block; font-size: 11px; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+
+    .fld input, .fld select {
+      width: 100%;
+      height: 40px;
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-sm);
+      padding: 0 11px;
+      font-family: "DM Mono", monospace;
+      font-size: 14px;
+      color: var(--ink);
+      background: white;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .fld input:focus, .fld select:focus { border-color: var(--cta); }
+    .fld input.big { font-size: 17px; font-weight: 500; height: 44px; }
+
+    .toggle-box { display: inline-flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+
+    .tb {
+      padding: 6px 10px;
+      border: 1.5px solid var(--line);
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      background: white;
+      color: var(--ink-soft);
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .tb.active { border-color: var(--cta); background: var(--lav-light); color: var(--cta); }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      background: var(--lav-light);
+      color: var(--ink-mid);
+      padding: 4px 9px;
+      border-radius: 999px;
+      margin-top: 7px;
+      border: 1px solid var(--line-lav);
+    }
+
+    .cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 4px; }
+
+    .cbtn {
+      border: 1.5px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 14px 8px 11px;
+      text-align: center;
+      cursor: pointer;
+      background: white;
+      transition: all 0.18s;
+      box-shadow: var(--sh-sm);
+    }
+
+    .cbtn:hover { border-color: var(--line-lav); transform: translateY(-1px); }
+    .cbtn.sel   { border-color: var(--cta); background: var(--lav-light); }
+
+    .cbtn .ico { font-size: 24px; color: var(--ink-soft); margin-bottom: 7px; display: block; transition: color 0.18s; }
+    .cbtn.sel .ico { color: var(--cta); }
+    .cbtn .cn  { display: block; font-size: 11px; font-weight: 700; color: var(--ink); line-height: 1.3; }
+    .cbtn .ce  { display: block; margin-top: 2px; font-size: 9px; color: var(--ink-soft); }
+    .cbtn .ck  { display: block; margin-top: 6px; font-size: 10px; font-weight: 700; color: var(--cta); }
+
+    .btnp {
+      width: 100%;
+      height: 44px;
+      background: var(--cta);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 4px;
+      box-shadow: 0 4px 14px rgba(98,94,164,0.28);
+    }
+
+    .btnp:hover  { background: var(--cta-2); }
+    .btnp:active { transform: scale(0.99); }
+
+    .tri {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .tc {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 14px 9px 12px;
+      text-align: center;
+      position: relative;
+      margin-top: 10px;
+      box-shadow: var(--sh-sm);
+    }
+
+    .tcl { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-soft); margin-bottom: 6px; }
+    .tcv { font-family: "DM Mono", monospace; font-size: 17px; font-weight: 500; color: var(--ink); line-height: 1; }
+    .tcs { font-size: 9px; color: var(--ink-soft); margin-top: 3px; }
+
+    .badge {
+      position: absolute;
+      top: -9px; left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-best { background: var(--green-soft); color: var(--green); }
+
+    .hero-result {
+      background: linear-gradient(150deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      border-radius: var(--r-md);
+      padding: 16px 16px 42px;
+      margin-bottom: 10px;
+      text-align: center;
+      box-shadow: var(--sh-dark);
+      position: relative;
+    }
+
+    .hero-result .hl { font-size: 11px; opacity: 0.65; margin-bottom: 5px; }
+    .hero-result .hv { font-family: "DM Mono", monospace; font-size: 40px; font-weight: 500; color: #6ee09c; line-height: 1; }
+    .hero-result .hs { font-size: 12px; opacity: 0.68; margin-top: 4px; }
+    .hero-result .ha { font-size: 12px; opacity: 0.82; margin-top: 7px; font-weight: 700; }
+
+    .hmt-wrap { position: absolute; bottom: 11px; right: 13px; }
+
+    .hmt-bar {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,0.08);
+      border-radius: 7px;
+    }
+
+    .hmt {
+      color: rgba(255,255,255,0.40);
+      cursor: pointer;
+      padding: 4px 9px;
+      font-size: 10px;
+      font-weight: 800;
+      transition: all 0.18s;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .hmt.on { background: rgba(255,255,255,0.18); color: white; }
+
+    .big-acc-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 11px 13px;
+      margin-bottom: 9px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink-mid);
+    }
+
+    .big-acc-toggle .chev { font-size: 11px; color: var(--ink-soft); transition: transform 0.2s; }
+    .big-acc-toggle.open .chev { transform: rotate(180deg); }
+
+    .bc {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 13px;
+      margin-bottom: 9px;
+    }
+
+    .bw { margin-bottom: 10px; }
+
+    .brow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+      gap: 8px;
+    }
+
+    .bleft {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--ink-soft);
+      flex: 1;
+      min-width: 0;
+      flex-wrap: wrap;
+      row-gap: 2px;
+    }
+
+    .bright { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+    .bval   { font-family: "DM Mono", monospace; font-weight: 500; color: var(--ink); font-size: 11px; }
+
+    .bchev {
+      color: var(--ink-soft);
+      font-size: 10px;
+      cursor: pointer;
+      padding: 2px 4px;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+
+    .bchev.open { transform: rotate(180deg); }
+
+    .bt { height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+    .bf { height: 100%; border-radius: 999px; }
+
+    .acc {
+      display: none;
+      margin-top: 7px;
+      padding: 9px 9px 5px;
+      background: white;
+      border-radius: var(--r-sm);
+      border: 1px solid var(--line);
+    }
+
+    .acc.open { display: block; }
+
+    .acc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      color: var(--ink-soft);
+      margin-bottom: 5px;
+      gap: 7px;
+    }
+
+    .acc-row span:last-child {
+      font-family: "DM Mono", monospace;
+      font-weight: 500;
+      color: var(--ink);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .acc-row.total {
+      border-top: 1px solid var(--line);
+      padding-top: 5px;
+      margin-top: 2px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .adj-label { display: flex; align-items: center; gap: 4px; }
+
+    .tip-wrap { position: relative; display: inline-flex; }
+
+    .tip-btn {
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--line);
+      color: var(--ink-soft);
+      font-size: 8px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    .tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: white;
+      font-size: 10px;
+      line-height: 1.5;
+      padding: 8px 10px;
+      border-radius: 8px;
+      width: 210px;
+      text-align: left;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--ink);
+    }
+
+    .tip-wrap.show .tooltip { display: block; }
+
+    .uw-bridge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 12px 0;
+      padding: 14px 16px;
+      background: var(--lav-light);
+      border: 1px solid var(--line-lav);
+      border-radius: var(--r-md);
+    }
+
+    .uw-bridge-text { flex: 1; min-width: 0; font-size: 13px; line-height: 1.55; color: var(--ink-mid); }
+
+    .uw-bridge-logo {
+      flex: 0 0 120px;
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      margin-left: auto;
+      display: block;
+    }
+
+    .calc-cta {
+      background: linear-gradient(150deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      border-radius: var(--r-md);
+      padding: 15px;
+      margin-bottom: 12px;
+      text-align: center;
+      box-shadow: var(--sh-dark);
+    }
+
+    .calc-cta h3 { font-size: 14px; font-weight: 700; margin-bottom: 5px; color: var(--gold); }
+    .calc-cta p  { font-size: 11px; opacity: 0.68; line-height: 1.5; margin-bottom: 11px; }
+
+    .cta-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+    .cta-row a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .disc { font-size: 10px; color: var(--ink-soft); text-align: center; line-height: 1.6; padding: 0 4px 6px; }
+
+    /* ═══════════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════════ */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .quote {
+      background: white;
+      border-radius: var(--r-xl);
+      padding: 28px 24px;
+      box-shadow: var(--sh-md);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    .quote::before {
+      content: "\201C";
+      
+      font-size: 72px;
+      line-height: 1;
+      color: var(--lav);
+      position: absolute;
+      top: 14px; left: 22px;
+      pointer-events: none;
+    }
+
+    .quote p {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.72;
+      padding-top: 24px;
+    }
+
+    .quote footer {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink-soft);
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+    }
+
+    /* ═══════════════════════════════════════════
+       FINAL CTA
+    ═══════════════════════════════════════════ */
+    .cta-band {
+      background: linear-gradient(150deg, var(--brand) 0%, var(--brand-2) 100%);
+      color: white;
+      border-radius: var(--r-xl);
+      padding: 40px 36px;
+      box-shadow: var(--sh-dark);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .cta-band p { color: rgba(255,255,255,0.70); line-height: 1.70; max-width: 50ch; margin-top: 10px; }
+    .cta-band h2 { color: var(--gold); }
+    .cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .site-footer { padding: 24px 0 40px; }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--ink-soft);
+      border-top: 1px solid rgba(98,94,164,0.18);
+      padding-top: 18px;
+    }
+
+    .footer-row strong { color: var(--ink); }
+
+    .hide { display: none !important; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .hero-grid, .about-grid, .cta-band, .ev-header, .services-intro { grid-template-columns: 1fr; }
+      .hero-media { min-height: 340px; order: -1; }
+      .cards-3 { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .quotes-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 0 16px; }
+      .site-header { position: static; }
+      .header-row { flex-direction: column; align-items: stretch; padding: 12px 0; gap: 10px; }
+      .hero { padding-top: 20px; }
+      .hero-copy { padding: 28px 22px; }
+      .r2 { grid-template-columns: 1fr; }
+      .cgrid { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; }
+      .cbtn { padding: 11px 6px 9px; }
+      .cbtn .ico { font-size: 20px; }
+      .cbtn .cn  { font-size: 10px; }
+      .tri { gap: 5px; }
+      .tc  { padding: 14px 5px 11px; }
+      .tcl { font-size: 8px; }
+      .tcv { font-size: 14px; }
+      .badge { font-size: 7px; padding: 2px 5px; }
+      .hero-result .hv { font-size: 34px; }
+      .uw-bridge { flex-direction: column; align-items: flex-start; }
+      .uw-bridge-logo { width: 100px; flex: 0 0 auto; margin-left: 0; }
+      #evt { border-radius: var(--r-lg); }
+      .cta-band { padding: 28px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="wrap">
+      <div class="header-row">
+        <a href="#top" class="brand-lockup" aria-label="ND Vehicle Consultancy home">
+          <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy logo" />
+          <div class="brand-text">
+            <strong>ND Vehicle Consultancy</strong>
+            <span>Independent car buying advice</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+
+          <div class="hero-copy">
+            <div class="hero-eyebrow">
+              <span class="dot"></span>
+              Independent · Personal · Local
+            </div>
+            <h1>Find the right car, <em>with someone on your side</em></h1>
+            <p class="lead">I offer a personal, independent service for private buyers — whether you're replacing the family car, exploring EV for the first time, or searching for something more specialist.</p>
+            <div class="hero-actions">
+              <a class="btn" href="#ev-tool">See what EV could save you →</a>
+              <a class="btn-outline" href="#contact">Get in touch</a>
+            </div>
+            <div class="hero-trust">
+              <span class="trust-pill">Not tied to any dealership</span>
+              <span class="trust-pill">Honest, independent advice</span>
+              <span class="trust-pill">One-to-one and personal</span>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <img src="assets/Nick_EV.webp" alt="Nick Darlow standing beside an electric car" />
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="wrap">
+        <div class="services-intro">
+          <div>
+            <div class="section-eyebrow">How I can help</div>
+            <h2 class="section-h2">A more personal way to buy your next car</h2>
+          </div>
+          <p class="section-lead">Independent guidance from shortlist to sourcing — covering petrol, diesel, hybrid and EV, matched to how you actually drive.</p>
+        </div>
+
+        <div class="cards-3">
+          <article class="card-dark">
+            <div class="service-icon">⚡</div>
+            <h3 class="service-card">ICE to EV guidance</h3>
+            <p class="service-card">Clear, independent advice on whether petrol, diesel, hybrid or electric is the right fit for how you actually use your car.</p>
+            <span class="price-pill">Typical price: £145</span>
+          </article>
+
+          <article class="card-dark">
+            <div class="service-icon">🚗</div>
+            <h3 class="service-card">Personal car finding</h3>
+            <p class="service-card">A tailored search service to help you find the right car for your budget, lifestyle and preferences — without the dealership pressure.</p>
+            <span class="price-pill">Typical price: £395</span>
+          </article>
+
+          <article class="card-dark">
+            <div class="service-icon">🔎</div>
+            <h3 class="service-card">Bespoke vehicle sourcing</h3>
+            <p class="service-card">From everyday family cars to harder-to-find specialist vehicles, with support from initial brief through to handover.</p>
+            <span class="price-pill">Starting from £1,500</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-eyebrow">About me</div>
+        <h2 class="section-h2">Experience that builds confidence</h2>
+
+        <div class="about-grid">
+          <div class="card-white">
+            <div class="about-body">
+              <p>I offer genuinely independent advice — not shaped by stock lists or sales targets. My background covers personal and business purchases, from everyday family cars to specialist and niche vehicles.</p>
+              <p>I also have wider commercial experience from building and managing Britishvolt's 100+ vehicle fleet, which sharpened my understanding of market pricing, depreciation and total running costs — knowledge I put to work for private buyers every day.</p>
+            </div>
+            <ul class="check-list">
+              <li>Genuinely independent — advice not tied to any dealer or manufacturer</li>
+              <li>Real market knowledge across petrol, diesel, hybrid and EV</li>
+              <li>Personal, one-to-one support from first conversation to final handover</li>
+            </ul>
+          </div>
+
+          <div class="stat-stack">
+            <div class="card-dark stat-card">
+              <strong>10+</strong>
+              <span>Years of vehicle sourcing and funding experience, personal and business</span>
+            </div>
+            <div class="card-dark stat-card">
+              <strong>100+</strong>
+              <span>Vehicles built and managed at Britishvolt — real commercial market experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EV TOOL -->
+    <section class="ev-section" id="ev-tool">
+      <div class="wrap">
+
+        <div class="ev-header">
+          <div>
+            <div class="section-eyebrow">EV savings comparison</div>
+            <h2 class="section-h2">Start with a simple EV savings comparison</h2>
+            <p class="section-lead" style="margin-top:8px;">Enter your current car's details and see what the switch to electric could look like in real numbers.</p>
+          </div>
+          <div class="ev-stat-callout">
+            <div class="big-num">£135<span style="font-size:22px;font-weight:600;color:var(--ink-soft);font-family:'Inter',sans-serif;">/month</span></div>
+            <p>Potential saving switching from petrol to EV — based on 10,000 miles a year on a smart tariff</p>
+          </div>
+        </div>
+
+        <div id="evt">
+          <div class="calc-hdr">
+            <div class="calc-hdr-top">
+              <div>
+                <h2>EV Running Cost Calculator</h2>
+                <p>Compare your current car with a likely EV alternative</p>
+              </div>
+              <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
+            </div>
+            <div class="calc-steps">
+              <div class="calc-step active" id="p1" onclick="go(1)">1. Your Car &amp; Mileage</div>
+              <div class="calc-step" id="p2" onclick="go(2)">2. Your EV Choice</div>
+              <div class="calc-step" id="p3" onclick="go(3)">3. Your Potential Savings</div>
+            </div>
+          </div>
+
+          <div class="calc-body">
+            <div class="calc-body-inner">
+
+              <!-- STEP 1 -->
+              <div class="calc-panel active" id="s1">
+                <div class="slbl">Tell us about your current car</div>
+                <div class="card">
+                  <div class="r2" style="margin-bottom:10px;">
+                    <div class="fld">
+                      <label>Fuel type</label>
+                      <select id="fuelType" onchange="updatePPL()">
+                        <option value="diesel">Diesel</option>
+                        <option value="petrol">Petrol</option>
+                      </select>
+                    </div>
+                    <div class="fld">
+                      <label>Pence per litre</label>
+                      <input type="number" id="ppl" value="164.9" min="100" max="300" class="big" />
+                    </div>
+                  </div>
+                  <div class="fld" style="margin-bottom:10px;">
+                    <label>MPG — your car's fuel economy</label>
+                    <input type="number" id="mpg" value="45" min="20" max="90" />
+                  </div>
+                  <div class="chip" style="margin-bottom:10px;">💡 Not sure? Diesel averages ~45 mpg · Petrol ~35 mpg</div>
+                  <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
+                    <div style="display:flex;gap:10px;align-items:flex-start;">
+                      <div class="toggle-box">
+                        <div class="tb active" id="tb-a" onclick="swm('a')">Annual</div>
+                        <div class="tb" id="tb-w" onclick="swm('w')">Weekly</div>
+                      </div>
+                      <div style="flex:1;min-width:0;">
+                        <div id="fa" class="fld">
+                          <label>How many miles do you drive?</label>
+                          <input type="text" id="mA" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" />
+                        </div>
+                        <div id="fw" class="fld hide">
+                          <label>How many miles do you drive per week?</label>
+                          <input type="text" id="mW" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" />
+                        </div>
+                        <div class="chip" id="meq" style="margin-top:6px;">833 miles/month</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button class="btnp" type="button" onclick="go(2)">Next: Your EV Choice →</button>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="calc-panel" id="s2">
+                <div class="slbl">What EV are you considering?</div>
+                <div class="cgrid" id="carGrid"></div>
+                <div class="chip" style="margin-bottom:13px;">Efficiency figures are typical real-world estimates</div>
+                <button class="btnp" type="button" onclick="go(3)">See your potential savings →</button>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="calc-panel" id="s3">
+                <div class="tri" id="tri"></div>
+                <div id="heroResult" class="hero-result"></div>
+
+                <div class="big-acc-toggle" id="bc-toggle" onclick="toggleBigAcc('bc','bc-toggle')">
+                  <span>Show full cost breakdown</span>
+                  <span class="chev">▾</span>
+                </div>
+
+                <div id="bc" class="bc acc"></div>
+
+                <div class="uw-bridge">
+                  <div class="uw-bridge-text">
+                    I've partnered with Utility Warehouse to offer EV smart tariffs alongside other household services. <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener" style="color:var(--cta);font-weight:700;text-decoration:underline;">Find out more →</a>
+                  </div>
+                  <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">
+                    <img src="assets/UW_logo.webp" alt="Utility Warehouse logo" class="uw-bridge-logo" />
+                  </a>
+                </div>
+
+                <div class="calc-cta">
+                  <h3>Ready to explore your options?</h3>
+                  <p>I can help find the right EV for your budget and get you set up on the right home charging tariff.</p>
+                  <div class="cta-row">
+                    <a href="https://wa.me/447918052183" style="background:#25D366;">WhatsApp</a>
+                    <a href="tel:+447918052183" style="background:var(--accent);">Call</a>
+                    <a href="mailto:ndvcltd@gmail.com" style="background:#68727a;">Email</a>
+                  </div>
+                </div>
+
+                <div class="disc" id="disc"></div>
+              </div>
+
+            </div><!-- /calc-body-inner -->
+          </div><!-- /calc-body -->
+        </div><!-- /evt -->
+
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="testimonials">
+      <div class="wrap">
+        <div class="section-heading">
+          <div class="section-label">What clients say</div>
+          <h2>Trusted by private buyers across the Midlands</h2>
+        </div>
+
+        <div class="quotes-grid">
+          <blockquote class="quote">
+            <p>"From start to finish Nick offers an outstanding service. My family and I have used Nick several times over the years to advise and procure our vehicles, and we have always been delighted with the service received."</p>
+            <footer>Steve Thomas — Raunds, Northamptonshire</footer>
+          </blockquote>
+
+          <blockquote class="quote">
+            <p>"Nick Darlow is incredibly knowledgeable about cars and the car market, scrupulous on detail, and always seems to manage to create a happy experience for all parties."</p>
+            <footer>Nick Weldon — Rushden Jazz School</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <div class="cta-band">
+          <div>
+            <h2>Let's find the right car for you</h2>
+            <p>Whether you're replacing the family car, curious about EV, or looking for something specialist — I offer independent advice and a genuinely personal way to buy.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-light" href="https://wa.me/447918052183">WhatsApp</a>
+            <a class="btn btn-call" href="tel:+447918052183">Call</a>
+            <a class="btn btn-ghost-light" href="mailto:ndvcltd@gmail.com">Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-row">
+        <div><strong>ND Vehicle Consultancy</strong> — Independent car buying advice, EV guidance and bespoke vehicle sourcing</div>
+        <div>© ND Vehicle Consultancy</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const CARS = [
+      { id: "hatch", name: "Family hatchback", eg: "VW ID.3, Nissan Leaf",       mpk: 3.8, ico: "🚗" },
+      { id: "exec",  name: "Executive saloon",  eg: "Tesla Model 3, BMW i4",      mpk: 3.5, ico: "🚘" },
+      { id: "suv",   name: "Family SUV",         eg: "VW ID.4, Hyundai IONIQ 5",  mpk: 3.2, ico: "🚙" },
+      { id: "large", name: "Large SUV / 7-seat", eg: "Tesla Model Y, Kia EV9",    mpk: 2.8, ico: "🚐" }
+    ];
+
+    const PPL      = { diesel: 164.9, petrol: 142.9 };
+    const STD_P    = 24;
+    const E7_NIGHT = 9;
+    const E7_DAY   = 34;
+    const EV_NIGHT = 7;
+    const EV_DAY   = 30;
+    const HOME_KWH = 2700;
+    const TOOLTIP  = "Overnight charging is cheaper — but daytime electricity costs more on this plan. Both effects are included here.";
+
+    let sel   = "hatch";
+    let mMode = "a";
+    let view  = "m";
+    let R     = {};
+
+    function updatePPL() {
+      const ft = document.getElementById("fuelType").value;
+      document.getElementById("ppl").value = PPL[ft];
+      document.getElementById("mpg").value = ft === "diesel" ? 45 : 35;
+    }
+
+    function renderCars() {
+      document.getElementById("carGrid").innerHTML = CARS.map(c => `
+        <div class="cbtn${sel === c.id ? " sel" : ""}" onclick="pick('${c.id}')">
+          <span class="ico">${c.ico}</span>
+          <span class="cn">${c.name}</span>
+          <span class="ce">${c.eg}</span>
+          <span class="ck">~${c.mpk} mi/kWh</span>
+        </div>
+      `).join("");
+    }
+
+    function pick(id) { sel = id; renderCars(); }
+
+    function swm(m) {
+      mMode = m;
+      ["a","w"].forEach(x => {
+        document.getElementById("tb-" + x).classList.toggle("active", x === m);
+        document.getElementById("f"  + x).classList.toggle("hide",   x !== m);
+      });
+      upd();
+    }
+
+    function fmtMiles(el) {
+      const raw = el.value.replace(/[^0-9]/g, "");
+      if (raw === "") return;
+      el.value = parseInt(raw, 10).toLocaleString("en-GB");
+    }
+
+    function getAnnual() {
+      if (mMode === "a") return parseFloat((document.getElementById("mA").value || "10000").replace(/,/g, "")) || 10000;
+      return (parseFloat((document.getElementById("mW").value || "200").replace(/,/g, "")) || 200) * 52;
+    }
+
+    function upd() {
+      const annual = getAnnual();
+      const meq = document.getElementById("meq");
+      if (!meq) return;
+      meq.textContent = mMode === "a"
+        ? Math.round(annual / 12).toLocaleString("en-GB") + " miles/month"
+        : Math.round(annual).toLocaleString("en-GB") + " miles/year";
+    }
+
+    function f(n)  { return "£" + Math.round(n).toLocaleString("en-GB"); }
+    function fv(n) { return view === "m" ? f(n / 12) + "/m" : f(n) + "/yr"; }
+
+    function setView(v) {
+      view = v;
+      if (Object.keys(R).length) renderResults();
+    }
+
+    function go(n) {
+      document.querySelectorAll(".calc-panel").forEach(p => p.classList.remove("active"));
+      document.getElementById("s" + n).classList.add("active");
+      ["p1","p2","p3"].forEach((id, i) => {
+        const el = document.getElementById(id);
+        el.classList.remove("active","done");
+        if (i + 1 < n)  el.classList.add("done");
+        if (i + 1 === n) el.classList.add("active");
+      });
+      if (n === 3) calcAndRender();
+    }
+
+    function calcAndRender() {
+      const car    = CARS.find(c => c.id === sel) || CARS[0];
+      const ppl    = parseFloat(document.getElementById("ppl").value) || 164.9;
+      const mpg    = parseFloat(document.getElementById("mpg").value) || 45;
+      const fuel   = document.getElementById("fuelType").value;
+      const annual = getAnnual();
+
+      const fuelA   = annual * (1 / (mpg * 0.2199692)) * (ppl / 100);
+      const kwhA    = annual / car.mpk;
+      const stdA    = kwhA * (STD_P / 100);
+
+      const e7CarA  = kwhA * (E7_NIGHT / 100);
+      const e7HomeA = (HOME_KWH * 0.85 * (E7_DAY / 100)) + (HOME_KWH * 0.15 * (E7_NIGHT / 100)) - (HOME_KWH * (STD_P / 100));
+      const e7NetA  = e7CarA + e7HomeA;
+
+      const evCarA  = kwhA * (EV_NIGHT / 100);
+      const evHomeA = (HOME_KWH * 0.90 * (EV_DAY / 100)) + (HOME_KWH * 0.10 * (EV_NIGHT / 100)) - (HOME_KWH * (STD_P / 100));
+      const evNetA  = evCarA + evHomeA;
+
+      R = { car, fuel, annual, kwhA, fuelA, stdA, e7NetA, e7CarA, e7HomeA, evNetA, evCarA, evHomeA };
+      renderResults();
+    }
+
+    function toggleAcc(id) {
+      const acc  = document.getElementById(id);
+      const chev = document.getElementById(id + "-chev");
+      const isOpen = acc.classList.contains("open");
+      acc.classList.toggle("open", !isOpen);
+      if (chev) chev.classList.toggle("open", !isOpen);
+    }
+
+    function toggleBigAcc(id, btnId) {
+      const acc    = document.getElementById(id);
+      const btn    = document.getElementById(btnId);
+      const isOpen = acc.classList.contains("open");
+      acc.classList.toggle("open", !isOpen);
+      if (btn) {
+        btn.classList.toggle("open", !isOpen);
+        btn.querySelector("span:first-child").textContent = isOpen
+          ? "Show full cost breakdown"
+          : "Hide full cost breakdown";
+      }
+    }
+
+    function toggleTip(id, e) {
+      if (e) e.stopPropagation();
+      document.querySelectorAll(".tip-wrap.show").forEach(el => {
+        if (el.id !== id) el.classList.remove("show");
+      });
+      document.getElementById(id).classList.toggle("show");
+    }
+
+    document.addEventListener("click", () => {
+      document.querySelectorAll(".tip-wrap.show").forEach(el => el.classList.remove("show"));
+    });
+
+    function renderResults() {
+      const GOLD = "#b18b42";
+      const { car, fuel, annual, kwhA, fuelA, stdA, e7NetA, e7CarA, e7HomeA, evNetA, evCarA, evHomeA } = R;
+
+      const cheapestFixed = stdA <= e7NetA ? "std" : "e7";
+      const midIsStd = cheapestFixed === "std";
+      const midV     = midIsStd ? stdA  : e7NetA;
+      const midLabel = midIsStd ? "EV — standard rate" : "EV — Economy 7";
+      const midSub   = midIsStd ? "at 24p/kWh"        : "~9p overnight";
+
+      document.getElementById("tri").innerHTML = `
+        <div class="tc">
+          <div class="tcl">Your ${fuel}</div>
+          <div class="tcv">${fv(fuelA)}</div>
+          <div class="tcs">current running cost</div>
+        </div>
+        <div class="tc" style="border:2px solid ${GOLD};">
+          <div class="badge" style="background:${GOLD};color:white;">cheapest fixed</div>
+          <div class="tcl">${midLabel}</div>
+          <div class="tcv" style="color:${GOLD};">${fv(midV)}</div>
+          <div class="tcs">${midSub}</div>
+        </div>
+        <div class="tc" style="border:2px solid #256346;">
+          <div class="badge badge-best">lowest cost</div>
+          <div class="tcl">EV — smart tariff*</div>
+          <div class="tcv" style="color:#256346;">${fv(evNetA)}</div>
+          <div class="tcs">~7p overnight</div>
+        </div>
+      `;
+
+      const bestSaveA = fuelA - evNetA;
+      const heroIsPos = bestSaveA > 0;
+
+      const toggles = `
+        <div class="hmt-wrap">
+          <div class="hmt-bar">
+            <div class="hmt${view === "m" ? " on" : ""}" onclick="setView('m')">Monthly</div>
+            <div class="hmt${view === "a" ? " on" : ""}" onclick="setView('a')">Annual</div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("heroResult").innerHTML = heroIsPos ? `
+        <div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/yr in a ${fuel}</div>
+        <div class="hv">${fv(bestSaveA)}</div>
+        <div class="ha">${car.name} EV on a smart tariff</div>
+        ${toggles}
+      ` : `
+        <div class="hl">Compared with your current ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/yr</div>
+        <div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSaveA))}</div>
+        <div class="hs">more per ${view === "m" ? "month" : "year"} to charge — the right tariff could narrow that gap</div>
+        <div class="ha">${car.name} EV</div>
+        ${toggles}
+      `;
+
+      const stdBarCol = cheapestFixed === "std" ? GOLD : "#d3b06b";
+      const e7BarCol  = cheapestFixed === "e7"  ? GOLD : "#d3b06b";
+      const maxV      = Math.max(fuelA, stdA) * 1.12;
+      const pct       = n => Math.min((n / maxV * 70), 70).toFixed(1);
+
+      document.getElementById("bc").innerHTML = `
+        <div class="bw">
+          <div class="brow">
+            <div class="bleft">⛽ ${fuel} fuel</div>
+            <div class="bright"><span class="bval">${fv(fuelA)}</span></div>
+          </div>
+          <div class="bt"><div class="bf" style="width:${pct(fuelA)}%;background:var(--ink);"></div></div>
+        </div>
+        <div class="bw">
+          <div class="brow">
+            <div class="bleft">⚡ EV — standard rate ${stdBarCol === GOLD ? '<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>' : ''}</div>
+            <div class="bright"><span class="bval">${fv(stdA)}</span></div>
+          </div>
+          <div class="bt"><div class="bf" style="width:${pct(stdA)}%;background:${stdBarCol};"></div></div>
+        </div>
+        <div class="bw">
+          <div class="brow">
+            <div class="bleft">⚡ EV — Economy 7 ${e7BarCol === GOLD ? '<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>' : ''}</div>
+            <div class="bright">
+              <span class="bval">${fv(e7NetA)}</span>
+              <span class="bchev" id="acc-e7-chev" onclick="toggleAcc('acc-e7')">▾</span>
+            </div>
+          </div>
+          <div class="bt"><div class="bf" style="width:${pct(e7NetA)}%;background:${e7BarCol};"></div></div>
+          <div class="acc" id="acc-e7">
+            <div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 9p)</span><span>${fv(e7CarA)}</span></div>
+            <div class="acc-row">
+              <div class="adj-label">
+                <span>Home rate adjustment</span>
+                <div class="tip-wrap" id="tip-e7" onclick="toggleTip('tip-e7', event)">
+                  <button class="tip-btn" type="button">i</button>
+                  <div class="tooltip">${TOOLTIP}</div>
+                </div>
+              </div>
+              <span>+${fv(e7HomeA)}</span>
+            </div>
+            <div class="acc-row total"><span>Total</span><span>${fv(e7NetA)}</span></div>
+          </div>
+        </div>
+        <div class="bw" style="margin-bottom:6px;">
+          <div class="brow">
+            <div class="bleft">⚡ EV — smart tariff* <span style="background:#e7f3ec;color:#256346;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">lowest cost</span></div>
+            <div class="bright">
+              <span class="bval">${fv(evNetA)}</span>
+              <span class="bchev" id="acc-ev-chev" onclick="toggleAcc('acc-ev')">▾</span>
+            </div>
+          </div>
+          <div class="bt"><div class="bf" style="width:${pct(evNetA)}%;background:#256346;"></div></div>
+          <div class="acc" id="acc-ev">
+            <div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 7p)</span><span>${fv(evCarA)}</span></div>
+            <div class="acc-row">
+              <div class="adj-label">
+                <span>Home rate adjustment</span>
+                <div class="tip-wrap" id="tip-ev" onclick="toggleTip('tip-ev', event)">
+                  <button class="tip-btn" type="button">i</button>
+                  <div class="tooltip">${TOOLTIP}</div>
+                </div>
+              </div>
+              <span>+${fv(evHomeA)}</span>
+            </div>
+            <div class="acc-row total"><span>Total</span><span>${fv(evNetA)}</span></div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("disc").innerHTML = `
+        All figures are indicative, b
