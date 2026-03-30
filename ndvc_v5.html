@@ -1091,8 +1091,8 @@
       .tcv { font-size: 14px; }
       .tcs { font-size: 8px; }
       .hero-result .hv { font-size: 32px; }
-      .uw-bridge { flex-direction: column; align-items: flex-start; }
-      .uw-bridge-logo { width: 100px; flex: 0 0 auto; margin-left: 0; }
+      .uw-bridge { flex-direction: row; align-items: center; }
+      .uw-bridge-logo { width: 72px; flex: 0 0 72px; margin-left: auto; }
       .modal-dialog { width: calc(100vw - 16px); max-height: calc(100vh - 16px); margin: 8px auto; }
     }
   </style>
@@ -1216,27 +1216,84 @@
         <div class="eyebrow">EV savings comparison</div>
         <h2 style="font-size:clamp(26px,3vw,38px);font-weight:800;color:var(--ink);line-height:1.12;letter-spacing:-0.02em;margin-bottom:32px;">Start with a simple EV savings comparison</h2>
 
-        <!-- Desktop: stat card + button trigger -->
         <div class="ev-intro-grid">
           <div class="ev-stat-card">
             <div class="big-num">£135<span style="font-size:24px;opacity:0.7;">/mo</span></div>
             <p>Potential saving switching from petrol to EV — based on 10,000 miles a year on a smart tariff. Use the calculator to see what the numbers look like for your situation.</p>
           </div>
-
           <div class="ev-desktop-trigger">
             <h3>See what switching could save you</h3>
             <p>Enter your current car details, choose a likely EV category, and get a clear cost comparison across tariff types — including the honest home rate impact.</p>
             <div style="margin-top:8px;">
-              <button class="btn" onclick="openCalc()" style="font-size:15px;min-height:52px;padding:0 26px;">Open EV calculator →</button>
+              <button class="btn" onclick="openCalc()" style="font-size:15px;min-height:52px;padding:0 26px;">Open EV calculator</button>
             </div>
             <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">Takes about 60 seconds. No sign-up required.</p>
           </div>
         </div>
 
-        <!-- Mobile: inline calculator -->
+        <!-- Mobile inline calculator -->
         <div class="ev-inline">
-          <div id="evt-inline" class="calc-container">
-            <!-- calculator injected by JS on mobile -->
+          <div style="border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-xl);border:1px solid var(--line);background:#f2f1f0;">
+            <div class="calc-hdr">
+              <div class="calc-hdr-top">
+                <div><h2>EV Running Cost Calculator</h2><p>Compare your current car with a likely EV alternative</p></div>
+                <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
+              </div>
+              <div class="calc-steps">
+                <div class="calc-step active" id="p1" onclick="go(1)">1. Your Car &amp; Mileage</div>
+                <div class="calc-step"        id="p2" onclick="go(2)">2. Your EV Choice</div>
+                <div class="calc-step"        id="p3" onclick="go(3)">3. Your Potential Savings</div>
+              </div>
+            </div>
+            <div class="calc-body">
+              <div class="calc-body-inner">
+                <div class="calc-panel active" id="s1">
+                  <div class="slbl">Tell us about your current car</div>
+                  <div class="card">
+                    <div class="r2" style="margin-bottom:11px;">
+                      <div class="fld"><label>Fuel type</label><select id="fuelType" onchange="updatePPL()"><option value="diesel">Diesel</option><option value="petrol">Petrol</option></select></div>
+                      <div class="fld"><label>Pence per litre</label><input type="number" id="ppl" value="164.9" min="100" max="300" class="big" /></div>
+                    </div>
+                    <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><input type="number" id="mpg" value="45" min="20" max="90" /></div>
+                    <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel ~45 mpg · Petrol ~35 mpg</div>
+                    <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
+                      <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <div class="toggle-box">
+                          <div class="tb active" id="tb-a" onclick="swm('a')">Annual</div>
+                          <div class="tb"        id="tb-w" onclick="swm('w')">Weekly</div>
+                        </div>
+                        <div style="flex:1;min-width:0;">
+                          <div id="fa" class="fld"><label>How many miles do you drive?</label><input type="text" id="mA" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /></div>
+                          <div id="fw" class="fld hide"><label>Miles per week?</label><input type="text" id="mW" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /></div>
+                          <div class="chip" id="meq" style="margin-top:6px;">833 miles/month</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btnp" onclick="go(2)">Next: Your EV Choice</button>
+                </div>
+                <div class="calc-panel" id="s2">
+                  <div class="slbl">What EV are you considering?</div>
+                  <div class="cgrid" id="carGrid"></div>
+                  <div class="chip" style="margin-bottom:13px;">Efficiency figures are typical real-world estimates</div>
+                  <button class="btnp" onclick="go(3)">See your potential savings</button>
+                </div>
+                <div class="calc-panel" id="s3">
+                  <div class="tri" id="tri"></div>
+                  <div id="heroResult" class="hero-result"></div>
+                  <div class="big-acc-toggle" id="bc-toggle" onclick="toggleBigAcc('bc','bc-toggle')"><span>Show full cost breakdown</span><span class="chev">▾</span></div>
+                  <div id="bc" class="bc acc"></div>
+                  <div class="uw-bridge">
+                    <div class="uw-bridge-text">I've partnered with Utility Warehouse to offer EV smart tariffs alongside other household services. <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">Find out more</a></div>
+                    <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener"><img src="assets/UW_logo.webp" alt="Utility Warehouse" class="uw-bridge-logo" /></a>
+                  </div>
+                  <div style="text-align:center;padding:4px 0 6px;">
+                    <a href="#contact" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;background:var(--blue);color:white;border-radius:var(--r-md);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:4px;">Get in touch ↓</a>
+                  </div>
+                  <div class="disc" id="disc"></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1295,458 +1352,195 @@
   </footer>
 
   <!-- ─── MODAL (desktop) ─── -->
-  <div class="modal-shell" id="calcModal" aria-hidden="true" role="dialog" aria-labelledby="calcTitle">
+
+  <!-- ─── MODAL (desktop) ─── -->
+  <div class="modal-shell" id="calcModal" aria-hidden="true" role="dialog">
     <div class="modal-backdrop" onclick="closeCalc()"></div>
     <div class="modal-dialog">
-      <button class="modal-close" onclick="closeCalc()" aria-label="Close calculator">×</button>
-      <div id="evt-modal"></div>
+      <button class="modal-close" onclick="closeCalc()" aria-label="Close">×</button>
+      <div style="border-radius:var(--r-xl);overflow:hidden;background:#f2f1f0;border:1px solid var(--line);">
+        <div class="calc-hdr">
+          <div class="calc-hdr-top">
+            <div><h2>EV Running Cost Calculator</h2><p>Compare your current car with a likely EV alternative</p></div>
+            <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
+          </div>
+          <div class="calc-steps">
+            <div class="calc-step active" id="p1m" onclick="gom(1)">1. Your Car &amp; Mileage</div>
+            <div class="calc-step"        id="p2m" onclick="gom(2)">2. Your EV Choice</div>
+            <div class="calc-step"        id="p3m" onclick="gom(3)">3. Your Potential Savings</div>
+          </div>
+        </div>
+        <div class="calc-body">
+          <div class="calc-body-inner">
+            <div class="calc-panel active" id="s1m">
+              <div class="slbl">Tell us about your current car</div>
+              <div class="card">
+                <div class="r2" style="margin-bottom:11px;">
+                  <div class="fld"><label>Fuel type</label><select id="fuelTypem" onchange="updatePPLm()"><option value="diesel">Diesel</option><option value="petrol">Petrol</option></select></div>
+                  <div class="fld"><label>Pence per litre</label><input type="number" id="pplm" value="164.9" min="100" max="300" class="big" /></div>
+                </div>
+                <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><input type="number" id="mpgm" value="45" min="20" max="90" /></div>
+                <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel ~45 mpg · Petrol ~35 mpg</div>
+                <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
+                  <div style="display:flex;gap:10px;align-items:flex-start;">
+                    <div class="toggle-box">
+                      <div class="tb active" id="tb-am" onclick="swmm('a')">Annual</div>
+                      <div class="tb"        id="tb-wm" onclick="swmm('w')">Weekly</div>
+                    </div>
+                    <div style="flex:1;min-width:0;">
+                      <div id="fam" class="fld"><label>How many miles do you drive?</label><input type="text" id="mAm" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /></div>
+                      <div id="fwm" class="fld hide"><label>Miles per week?</label><input type="text" id="mWm" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /></div>
+                      <div class="chip" id="meqm" style="margin-top:6px;">833 miles/month</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btnp" onclick="gom(2)">Next: Your EV Choice</button>
+            </div>
+            <div class="calc-panel" id="s2m">
+              <div class="slbl">What EV are you considering?</div>
+              <div class="cgrid" id="carGridm"></div>
+              <div class="chip" style="margin-bottom:13px;">Efficiency figures are typical real-world estimates</div>
+              <button class="btnp" onclick="gom(3)">See your potential savings</button>
+            </div>
+            <div class="calc-panel" id="s3m">
+              <div class="tri" id="trim"></div>
+              <div id="heroResultm" class="hero-result"></div>
+              <div class="big-acc-toggle" id="bc-togglem" onclick="toggleBigAcc('bcm','bc-togglem')"><span>Show full cost breakdown</span><span class="chev">▾</span></div>
+              <div id="bcm" class="bc acc"></div>
+              <div class="uw-bridge">
+                <div class="uw-bridge-text">I've partnered with Utility Warehouse to offer EV smart tariffs alongside other household services. <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">Find out more</a></div>
+                <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener"><img src="assets/UW_logo.webp" alt="Utility Warehouse" class="uw-bridge-logo" /></a>
+              </div>
+              <div style="text-align:center;padding:4px 0 8px;">
+                <a href="#contact" onclick="closeCalc()" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;background:var(--blue);color:white;border-radius:var(--r-md);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:4px;">Get in touch ↓</a>
+              </div>
+              <div class="disc" id="discm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <script>
-    /* ─── CALCULATOR DATA ─── */
-    const CARS = [
-      { id: "hatch", name: "Family hatchback", eg: "VW ID.3, Nissan Leaf",       mpk: 3.8, ico: "🚗" },
-      { id: "exec",  name: "Executive saloon",  eg: "Tesla Model 3, BMW i4",      mpk: 3.5, ico: "🚘" },
-      { id: "suv",   name: "Family SUV",         eg: "VW ID.4, Hyundai IONIQ 5",  mpk: 3.2, ico: "🚙" },
-      { id: "large", name: "Large SUV / 7-seat", eg: "Tesla Model Y, Kia EV9",    mpk: 2.8, ico: "🚐" }
+    const CARS=[
+      {id:"hatch",name:"Family hatchback",eg:"VW ID.3, Nissan Leaf",      mpk:3.8,ico:"🚗"},
+      {id:"exec", name:"Executive saloon", eg:"Tesla Model 3, BMW i4",     mpk:3.5,ico:"🚘"},
+      {id:"suv",  name:"Family SUV",       eg:"VW ID.4, Hyundai IONIQ 5",  mpk:3.2,ico:"🚙"},
+      {id:"large",name:"Large SUV / 7-seat",eg:"Tesla Model Y, Kia EV9",   mpk:2.8,ico:"🚐"}
     ];
+    const PPL={diesel:164.9,petrol:142.9},STD_P=24,E7_NIGHT=9,E7_DAY=34,EV_NIGHT=7,EV_DAY=30,HOME_KWH=2700;
+    const TOOLTIP="Overnight charging is cheaper — but daytime electricity costs more on this plan. Both effects are included here.";
+    let sel="hatch",mMode="a",mModem="a",view="m",viewm="m",R={},Rm={};
 
-    const PPL      = { diesel: 164.9, petrol: 142.9 };
-    const STD_P    = 24;
-    const E7_NIGHT = 9;
-    const E7_DAY   = 34;
-    const EV_NIGHT = 7;
-    const EV_DAY   = 30;
-    const HOME_KWH = 2700;
-    const TOOLTIP  = "Overnight charging is cheaper — but daytime electricity costs more on this plan. Both effects are included here.";
+    function openCalc(){document.getElementById("calcModal").classList.add("open");document.getElementById("calcModal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";}
+    function closeCalc(){document.getElementById("calcModal").classList.remove("open");document.getElementById("calcModal").setAttribute("aria-hidden","true");document.body.style.overflow="";}
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeCalc();});
 
-    let sel   = "hatch";
-    let mMode = "a";
-    let view  = "m";
-    let R     = {};
+    function fmtMiles(el){const r=el.value.replace(/[^0-9]/g,"");if(r)el.value=parseInt(r,10).toLocaleString("en-GB");}
+    function f(n){return "£"+Math.round(n).toLocaleString("en-GB");}
+    function fv(n,v){return v==="m"?f(n/12)+"/m":f(n)+"/yr";}
 
-    /* ─── CALCULATOR HTML ─── */
-    function calcHTML(idSuffix) {
-      return `
-      <div id="evt${idSuffix}" style="font-family:'Inter',sans-serif;background:#f2f1f0;color:#1a2228;border-radius:22px;overflow:hidden;box-shadow:0 32px 72px rgba(18,24,28,0.18);border:1px solid rgba(26,34,40,0.09);">
-        <div class="calc-hdr">
-          <div class="calc-hdr-top">
-            <div>
-              <h2 id="calcTitle${idSuffix}">EV Running Cost Calculator</h2>
-              <p>Compare your current car with a likely EV alternative</p>
-            </div>
-            <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
-          </div>
-          <div class="calc-steps">
-            <div class="calc-step active" id="p1${idSuffix}" onclick="go(1,'${idSuffix}')">1. Your Car &amp; Mileage</div>
-            <div class="calc-step"        id="p2${idSuffix}" onclick="go(2,'${idSuffix}')">2. Your EV Choice</div>
-            <div class="calc-step"        id="p3${idSuffix}" onclick="go(3,'${idSuffix}')">3. Your Potential Savings</div>
-          </div>
-        </div>
+    /* INLINE */
+    function updatePPL(){const ft=document.getElementById("fuelType").value;document.getElementById("ppl").value=PPL[ft];document.getElementById("mpg").value=ft==="diesel"?45:35;}
+    function renderCars(){document.getElementById("carGrid").innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><span class="ico">${c.ico}</span><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
+    function pick(id){sel=id;renderCars();renderCarsM();}
+    function swm(m){mMode=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x).classList.toggle("active",x===m);document.getElementById("f"+x).classList.toggle("hide",x!==m);});upd();}
+    function getAnnual(){return mMode==="a"?parseFloat((document.getElementById("mA").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mW").value||"200").replace(/,/g,""))||200)*52;}
+    function upd(){const a=getAnnual();const el=document.getElementById("meq");if(el)el.textContent=mMode==="a"?Math.round(a/12).toLocaleString("en-GB")+" miles/month":Math.round(a).toLocaleString("en-GB")+" miles/year";}
+    function setView(v){view=v;if(Object.keys(R).length)renderResults();}
+    function go(n){
+      ["s1","s2","s3"].forEach((id,i)=>{const p=document.getElementById(id);if(p)p.classList.toggle("active",i+1===n);});
+      ["p1","p2","p3"].forEach((id,i)=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("active","done");if(i+1<n)el.classList.add("done");if(i+1===n)el.classList.add("active");});
+      if(n===3)calcAndRender();
+    }
+    function calcAndRender(){
+      const car=CARS.find(c=>c.id===sel)||CARS[0];
+      const ppl=parseFloat(document.getElementById("ppl").value)||164.9;
+      const mpg=parseFloat(document.getElementById("mpg").value)||45;
+      const fuel=document.getElementById("fuelType").value;
+      const annual=getAnnual();
+      const fuelA=annual*(1/(mpg*0.2199692))*(ppl/100);
+      const kwhA=annual/car.mpk,stdA=kwhA*(STD_P/100);
+      const e7CarA=kwhA*(E7_NIGHT/100),e7HomeA=(HOME_KWH*0.85*(E7_DAY/100))+(HOME_KWH*0.15*(E7_NIGHT/100))-(HOME_KWH*(STD_P/100)),e7NetA=e7CarA+e7HomeA;
+      const evCarA=kwhA*(EV_NIGHT/100),evHomeA=(HOME_KWH*0.90*(EV_DAY/100))+(HOME_KWH*0.10*(EV_NIGHT/100))-(HOME_KWH*(STD_P/100)),evNetA=evCarA+evHomeA;
+      R={car,fuel,annual,kwhA,fuelA,stdA,e7NetA,e7CarA,e7HomeA,evNetA,evCarA,evHomeA};
+      renderResults();
+    }
+    function renderResults(){_render(R,view,"","");}
 
-        <div class="calc-body">
-          <div class="calc-body-inner">
+    /* MODAL */
+    function updatePPLm(){const ft=document.getElementById("fuelTypem").value;document.getElementById("pplm").value=PPL[ft];document.getElementById("mpgm").value=ft==="diesel"?45:35;}
+    function renderCarsM(){const el=document.getElementById("carGridm");if(!el)return;el.innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><span class="ico">${c.ico}</span><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
+    function swmm(m){mModem=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x+"m").classList.toggle("active",x===m);document.getElementById("f"+x+"m").classList.toggle("hide",x!==m);});updm();}
+    function getAnnualm(){return mModem==="a"?parseFloat((document.getElementById("mAm").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mWm").value||"200").replace(/,/g,""))||200)*52;}
+    function updm(){const a=getAnnualm();const el=document.getElementById("meqm");if(el)el.textContent=mModem==="a"?Math.round(a/12).toLocaleString("en-GB")+" miles/month":Math.round(a).toLocaleString("en-GB")+" miles/year";}
+    function setViewm(v){viewm=v;if(Object.keys(Rm).length)renderResultsM();}
+    function gom(n){
+      ["s1m","s2m","s3m"].forEach((id,i)=>{const p=document.getElementById(id);if(p)p.classList.toggle("active",i+1===n);});
+      ["p1m","p2m","p3m"].forEach((id,i)=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("active","done");if(i+1<n)el.classList.add("done");if(i+1===n)el.classList.add("active");});
+      if(n===3)calcAndRenderm();
+    }
+    function calcAndRenderm(){
+      const car=CARS.find(c=>c.id===sel)||CARS[0];
+      const ppl=parseFloat(document.getElementById("pplm").value)||164.9;
+      const mpg=parseFloat(document.getElementById("mpgm").value)||45;
+      const fuel=document.getElementById("fuelTypem").value;
+      const annual=getAnnualm();
+      const fuelA=annual*(1/(mpg*0.2199692))*(ppl/100);
+      const kwhA=annual/car.mpk,stdA=kwhA*(STD_P/100);
+      const e7CarA=kwhA*(E7_NIGHT/100),e7HomeA=(HOME_KWH*0.85*(E7_DAY/100))+(HOME_KWH*0.15*(E7_NIGHT/100))-(HOME_KWH*(STD_P/100)),e7NetA=e7CarA+e7HomeA;
+      const evCarA=kwhA*(EV_NIGHT/100),evHomeA=(HOME_KWH*0.90*(EV_DAY/100))+(HOME_KWH*0.10*(EV_NIGHT/100))-(HOME_KWH*(STD_P/100)),evNetA=evCarA+evHomeA;
+      Rm={car,fuel,annual,kwhA,fuelA,stdA,e7NetA,e7CarA,e7HomeA,evNetA,evCarA,evHomeA};
+      renderResultsM();
+    }
+    function renderResultsM(){_render(Rm,viewm,"m","m");}
 
-            <!-- STEP 1 -->
-            <div class="calc-panel active" id="s1${idSuffix}">
-              <div class="slbl">Tell us about your current car</div>
-              <div class="card">
-                <div class="r2" style="margin-bottom:11px;">
-                  <div class="fld">
-                    <label>Fuel type</label>
-                    <select id="fuelType${idSuffix}" onchange="updatePPL('${idSuffix}')">
-                      <option value="diesel">Diesel</option>
-                      <option value="petrol">Petrol</option>
-                    </select>
-                  </div>
-                  <div class="fld">
-                    <label>Pence per litre</label>
-                    <input type="number" id="ppl${idSuffix}" value="164.9" min="100" max="300" class="big" />
-                  </div>
-                </div>
-                <div class="fld" style="margin-bottom:11px;">
-                  <label>MPG — your car's fuel economy</label>
-                  <input type="number" id="mpg${idSuffix}" value="45" min="20" max="90" />
-                </div>
-                <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel averages ~45 mpg · Petrol ~35 mpg</div>
-                <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
-                  <div style="display:flex;gap:10px;align-items:flex-start;">
-                    <div class="toggle-box">
-                      <div class="tb active" id="tb-a${idSuffix}" onclick="swm('a','${idSuffix}')">Annual</div>
-                      <div class="tb"        id="tb-w${idSuffix}" onclick="swm('w','${idSuffix}')">Weekly</div>
-                    </div>
-                    <div style="flex:1;min-width:0;">
-                      <div id="fa${idSuffix}" class="fld">
-                        <label>How many miles do you drive?</label>
-                        <input type="text" id="mA${idSuffix}" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd('${idSuffix}');" />
-                      </div>
-                      <div id="fw${idSuffix}" class="fld hide">
-                        <label>How many miles do you drive per week?</label>
-                        <input type="text" id="mW${idSuffix}" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd('${idSuffix}');" />
-                      </div>
-                      <div class="chip" id="meq${idSuffix}" style="margin-top:6px;">833 miles/month</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <button class="btnp" onclick="go(2,'${idSuffix}')">Next: Your EV Choice →</button>
-            </div>
-
-            <!-- STEP 2 -->
-            <div class="calc-panel" id="s2${idSuffix}">
-              <div class="slbl">What EV are you considering?</div>
-              <div class="cgrid" id="carGrid${idSuffix}"></div>
-              <div class="chip" style="margin-bottom:13px;">Efficiency figures are typical real-world estimates</div>
-              <button class="btnp" onclick="go(3,'${idSuffix}')">See your potential savings →</button>
-            </div>
-
-            <!-- STEP 3 -->
-            <div class="calc-panel" id="s3${idSuffix}">
-              <div class="tri" id="tri${idSuffix}"></div>
-              <div id="heroResult${idSuffix}" class="hero-result"></div>
-              <div class="big-acc-toggle" id="bc-toggle${idSuffix}" onclick="toggleBigAcc('bc${idSuffix}','bc-toggle${idSuffix}')">
-                <span>Show full cost breakdown</span>
-                <span class="chev">▾</span>
-              </div>
-              <div id="bc${idSuffix}" class="bc acc"></div>
-              <div class="uw-bridge">
-                <div class="uw-bridge-text">
-                  I've partnered with Utility Warehouse to offer EV smart tariffs alongside other household services.
-                  <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">Find out more →</a>
-                </div>
-                <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">
-                  <img src="assets/UW_logo.webp" alt="Utility Warehouse" class="uw-bridge-logo" />
-                </a>
-              </div>
-              <div class="calc-cta">
-                <h3>Ready to explore your options?</h3>
-                <p>I can help find the right EV for your budget and get you set up on the right home charging tariff.</p>
-                <div class="cta-row">
-                  <a href="https://wa.me/447918052183" style="background:#25D366;">WhatsApp</a>
-                  <a href="tel:+447918052183"           style="background:#625DA5;">Call</a>
-                  <a href="mailto:ndvcltd@gmail.com"    style="background:#5a6a76;">Email</a>
-                </div>
-              </div>
-              <div class="disc" id="disc${idSuffix}"></div>
-            </div>
-
-          </div><!-- /calc-body-inner -->
-        </div><!-- /calc-body -->
-      </div>`;
+    /* SHARED RENDER */
+    function _render(data,v,idSfx,fnSfx){
+      const GC="#b18b42";
+      const {car,fuel,annual,kwhA,fuelA,stdA,e7NetA,e7CarA,e7HomeA,evNetA,evCarA,evHomeA}=data;
+      const cheapest=stdA<=e7NetA?"std":"e7";
+      const midV=cheapest==="std"?stdA:e7NetA;
+      const midLabel=cheapest==="std"?"EV — standard rate":"EV — Economy 7";
+      const midSub=cheapest==="std"?"at 24p/kWh":"~9p overnight";
+      const q=s=>document.getElementById(s);
+      const triEl=q("tri"+idSfx);
+      if(triEl)triEl.innerHTML=`
+        <div class="tc"><div class="tcl">Your ${fuel}</div><div class="tcv">${fv(fuelA,v)}</div><div class="tcs">current cost</div></div>
+        <div class="tc" style="border:2px solid ${GC};"><div class="badge" style="background:${GC};color:white;">cheapest fixed</div><div class="tcl">${midLabel}</div><div class="tcv" style="color:${GC};">${fv(midV,v)}</div><div class="tcs">${midSub}</div></div>
+        <div class="tc" style="border:2px solid #256346;"><div class="badge badge-best">lowest cost</div><div class="tcl">EV — smart tariff*</div><div class="tcv" style="color:#256346;">${fv(evNetA,v)}</div><div class="tcs">~7p overnight</div></div>`;
+      const bestSave=fuelA-evNetA,pos=bestSave>0;
+      const svFn=fnSfx?"setViewm":"setView";
+      const toggles=`<div class="hmt-wrap"><div class="hmt-bar"><div class="hmt${v==="m"?" on":""}" onclick="${svFn}('m')">Monthly</div><div class="hmt${v==="a"?" on":""}" onclick="${svFn}('a')">Annual</div></div></div>`;
+      const hrEl=q("heroResult"+idSfx);
+      if(hrEl)hrEl.innerHTML=pos
+        ?`<div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/yr in a ${fuel}</div><div class="hv">${fv(bestSave,v)}</div><div class="ha">${car.name} EV on a smart tariff</div>${toggles}`
+        :`<div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/yr</div><div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSave),v)}</div><div class="hs">more per ${v==="m"?"month":"year"} to charge — the right tariff could narrow that gap</div><div class="ha">${car.name} EV</div>${toggles}`;
+      const stCol=cheapest==="std"?GC:"#d3b06b",e7Col=cheapest==="e7"?GC:"#d3b06b";
+      const maxV=Math.max(fuelA,stdA)*1.12,pct=n=>Math.min(n/maxV*70,70).toFixed(1);
+      const bcEl=q("bc"+idSfx);
+      if(bcEl)bcEl.innerHTML=`
+        <div class="bw"><div class="brow"><div class="bleft">⛽ ${fuel} fuel</div><div class="bright"><span class="bval">${fv(fuelA,v)}</span></div></div><div class="bt"><div class="bf" style="width:${pct(fuelA)}%;background:var(--ink);"></div></div></div>
+        <div class="bw"><div class="brow"><div class="bleft">⚡ EV — standard rate ${stCol===GC?'<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>':''}</div><div class="bright"><span class="bval">${fv(stdA,v)}</span></div></div><div class="bt"><div class="bf" style="width:${pct(stdA)}%;background:${stCol};"></div></div></div>
+        <div class="bw"><div class="brow"><div class="bleft">⚡ EV — Economy 7 ${e7Col===GC?'<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>':''}</div><div class="bright"><span class="bval">${fv(e7NetA,v)}</span><span class="bchev" id="acc-e7-chev${idSfx}" onclick="toggleAcc('acc-e7${idSfx}')">▾</span></div></div><div class="bt"><div class="bf" style="width:${pct(e7NetA)}%;background:${e7Col};"></div></div>
+          <div class="acc" id="acc-e7${idSfx}"><div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 9p)</span><span>${fv(e7CarA,v)}</span></div><div class="acc-row"><div class="adj-label"><span>Home rate adjustment</span><div class="tip-wrap" id="tip-e7${idSfx}" onclick="toggleTip('tip-e7${idSfx}',event)"><button class="tip-btn" type="button">i</button><div class="tooltip">${TOOLTIP}</div></div></div><span>+${fv(e7HomeA,v)}</span></div><div class="acc-row total"><span>Total</span><span>${fv(e7NetA,v)}</span></div></div></div>
+        <div class="bw" style="margin-bottom:6px;"><div class="brow"><div class="bleft">⚡ EV — smart tariff* <span style="background:#e7f3ec;color:#256346;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">lowest cost</span></div><div class="bright"><span class="bval">${fv(evNetA,v)}</span><span class="bchev" id="acc-ev-chev${idSfx}" onclick="toggleAcc('acc-ev${idSfx}')">▾</span></div></div><div class="bt"><div class="bf" style="width:${pct(evNetA)}%;background:#256346;"></div></div>
+          <div class="acc" id="acc-ev${idSfx}"><div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 7p)</span><span>${fv(evCarA,v)}</span></div><div class="acc-row"><div class="adj-label"><span>Home rate adjustment</span><div class="tip-wrap" id="tip-ev${idSfx}" onclick="toggleTip('tip-ev${idSfx}',event)"><button class="tip-btn" type="button">i</button><div class="tooltip">${TOOLTIP}</div></div></div><span>+${fv(evHomeA,v)}</span></div><div class="acc-row total"><span>Total</span><span>${fv(evNetA,v)}</span></div></div></div>`;
+      const discEl=q("disc"+idSfx);
+      if(discEl)discEl.textContent="All figures are indicative, based on your inputs and typical real-world efficiency. Home rate adjustments assume annual household usage of 2,700 kWh — 15% at night on Economy 7, 10% at night on a smart tariff. Fixed rate options shown for standard and Economy 7 tariffs. *A smart meter is typically required for EV smart tariffs.";
     }
 
-    /* ─── MODAL OPEN / CLOSE ─── */
-    const isDesktop = () => window.innerWidth > 900;
+    function toggleAcc(id){const a=document.getElementById(id),c=document.getElementById(id+"-chev");if(!a)return;const o=a.classList.contains("open");a.classList.toggle("open",!o);if(c)c.classList.toggle("open",!o);}
+    function toggleBigAcc(id,btnId){const a=document.getElementById(id),b=document.getElementById(btnId);if(!a)return;const o=a.classList.contains("open");a.classList.toggle("open",!o);if(b){b.classList.toggle("open",!o);b.querySelector("span:first-child").textContent=o?"Show full cost breakdown":"Hide full cost breakdown";}}
+    function toggleTip(id,e){if(e)e.stopPropagation();document.querySelectorAll(".tip-wrap.show").forEach(el=>{if(el.id!==id)el.classList.remove("show");});const el=document.getElementById(id);if(el)el.classList.toggle("show");}
+    document.addEventListener("click",()=>document.querySelectorAll(".tip-wrap.show").forEach(el=>el.classList.remove("show")));
 
-    function openCalc() {
-      if (isDesktop()) {
-        const modal = document.getElementById("calcModal");
-        if (!document.getElementById("evt-modal").innerHTML) {
-          document.getElementById("evt-modal").innerHTML = calcHTML("-m");
-          renderCarsFor("-m");
-          upd("-m");
-        }
-        modal.classList.add("open");
-        modal.setAttribute("aria-hidden","false");
-        document.body.style.overflow = "hidden";
-      } else {
-        document.getElementById("ev-tool").scrollIntoView({ behavior: "smooth" });
-      }
-    }
-
-    function closeCalc() {
-      const modal = document.getElementById("calcModal");
-      modal.classList.remove("open");
-      modal.setAttribute("aria-hidden","true");
-      document.body.style.overflow = "";
-    }
-
-    document.addEventListener("keydown", e => {
-      if (e.key === "Escape") closeCalc();
-    });
-
-    /* ─── INLINE (MOBILE) INIT ─── */
-    function initInline() {
-      const el = document.getElementById("evt-inline");
-      if (el && !el.innerHTML) {
-        el.innerHTML = calcHTML("-i");
-        renderCarsFor("-i");
-        upd("-i");
-      }
-    }
-
-    /* Run inline init on mobile immediately */
-    if (!isDesktop()) initInline();
-
-    /* ─── CALCULATOR FUNCTIONS ─── */
-    function updatePPL(s) {
-      const ft = document.getElementById("fuelType" + s).value;
-      document.getElementById("ppl" + s).value = PPL[ft];
-      document.getElementById("mpg" + s).value = ft === "diesel" ? 45 : 35;
-    }
-
-    function renderCarsFor(s) {
-      const el = document.getElementById("carGrid" + s);
-      if (!el) return;
-      el.innerHTML = CARS.map(c => `
-        <div class="cbtn${sel === c.id ? " sel" : ""}" onclick="pick('${c.id}','${s}')">
-          <span class="ico">${c.ico}</span>
-          <span class="cn">${c.name}</span>
-          <span class="ce">${c.eg}</span>
-          <span class="ck">~${c.mpk} mi/kWh</span>
-        </div>
-      `).join("");
-    }
-
-    function pick(id, s) {
-      sel = id;
-      // re-render whichever instance is active
-      ["-m", "-i"].forEach(suffix => renderCarsFor(suffix));
-    }
-
-    function swm(m, s) {
-      mMode = m;
-      ["a","w"].forEach(x => {
-        const tb = document.getElementById("tb-" + x + s);
-        const fv = document.getElementById("f"   + x + s);
-        if (tb) tb.classList.toggle("active", x === m);
-        if (fv) fv.classList.toggle("hide",   x !== m);
-      });
-      upd(s);
-    }
-
-    function fmtMiles(el) {
-      const raw = el.value.replace(/[^0-9]/g, "");
-      if (raw === "") return;
-      el.value = parseInt(raw, 10).toLocaleString("en-GB");
-    }
-
-    function getAnnual(s) {
-      if (mMode === "a") return parseFloat((document.getElementById("mA" + s).value || "10000").replace(/,/g, "")) || 10000;
-      return (parseFloat((document.getElementById("mW" + s).value || "200").replace(/,/g, "")) || 200) * 52;
-    }
-
-    function upd(s) {
-      const annual = getAnnual(s);
-      const meq = document.getElementById("meq" + s);
-      if (!meq) return;
-      meq.textContent = mMode === "a"
-        ? Math.round(annual / 12).toLocaleString("en-GB") + " miles/month"
-        : Math.round(annual).toLocaleString("en-GB") + " miles/year";
-    }
-
-    function f(n)   { return "£" + Math.round(n).toLocaleString("en-GB"); }
-    function fv2(n) { return view === "m" ? f(n / 12) + "/m" : f(n) + "/yr"; }
-
-    function setView(v, s) {
-      view = v;
-      if (Object.keys(R).length) renderResults(s);
-    }
-
-    function go(n, s) {
-      ["s1","s2","s3"].forEach((id, i) => {
-        const panel = document.getElementById(id + s);
-        if (panel) panel.classList.toggle("active", i + 1 === n);
-      });
-      ["p1","p2","p3"].forEach((id, i) => {
-        const el = document.getElementById(id + s);
-        if (!el) return;
-        el.classList.remove("active","done");
-        if (i + 1 < n)  el.classList.add("done");
-        if (i + 1 === n) el.classList.add("active");
-      });
-      if (n === 3) calcAndRender(s);
-    }
-
-    function calcAndRender(s) {
-      const car    = CARS.find(c => c.id === sel) || CARS[0];
-      const ppl    = parseFloat(document.getElementById("ppl" + s).value) || 164.9;
-      const mpg    = parseFloat(document.getElementById("mpg" + s).value) || 45;
-      const fuel   = document.getElementById("fuelType" + s).value;
-      const annual = getAnnual(s);
-
-      const fuelA   = annual * (1 / (mpg * 0.2199692)) * (ppl / 100);
-      const kwhA    = annual / car.mpk;
-      const stdA    = kwhA * (STD_P / 100);
-
-      const e7CarA  = kwhA * (E7_NIGHT / 100);
-      const e7HomeA = (HOME_KWH * 0.85 * (E7_DAY / 100)) + (HOME_KWH * 0.15 * (E7_NIGHT / 100)) - (HOME_KWH * (STD_P / 100));
-      const e7NetA  = e7CarA + e7HomeA;
-
-      const evCarA  = kwhA * (EV_NIGHT / 100);
-      const evHomeA = (HOME_KWH * 0.90 * (EV_DAY / 100)) + (HOME_KWH * 0.10 * (EV_NIGHT / 100)) - (HOME_KWH * (STD_P / 100));
-      const evNetA  = evCarA + evHomeA;
-
-      R = { car, fuel, annual, kwhA, fuelA, stdA, e7NetA, e7CarA, e7HomeA, evNetA, evCarA, evHomeA };
-      renderResults(s);
-    }
-
-    function toggleAcc(id) {
-      const acc  = document.getElementById(id);
-      const chev = document.getElementById(id + "-chev");
-      if (!acc) return;
-      const isOpen = acc.classList.contains("open");
-      acc.classList.toggle("open", !isOpen);
-      if (chev) chev.classList.toggle("open", !isOpen);
-    }
-
-    function toggleBigAcc(id, btnId) {
-      const acc  = document.getElementById(id);
-      const btn  = document.getElementById(btnId);
-      if (!acc) return;
-      const isOpen = acc.classList.contains("open");
-      acc.classList.toggle("open", !isOpen);
-      if (btn) {
-        btn.classList.toggle("open", !isOpen);
-        btn.querySelector("span:first-child").textContent = isOpen ? "Show full cost breakdown" : "Hide full cost breakdown";
-      }
-    }
-
-    function toggleTip(id, e) {
-      if (e) e.stopPropagation();
-      document.querySelectorAll(".tip-wrap.show").forEach(el => { if (el.id !== id) el.classList.remove("show"); });
-      const el = document.getElementById(id);
-      if (el) el.classList.toggle("show");
-    }
-
-    document.addEventListener("click", () => {
-      document.querySelectorAll(".tip-wrap.show").forEach(el => el.classList.remove("show"));
-    });
-
-    function renderResults(s) {
-      const GOLD_C = "#b18b42";
-      const { car, fuel, annual, kwhA, fuelA, stdA, e7NetA, e7CarA, e7HomeA, evNetA, evCarA, evHomeA } = R;
-
-      const cheapestFixed = stdA <= e7NetA ? "std" : "e7";
-      const midIsStd      = cheapestFixed === "std";
-      const midV          = midIsStd ? stdA  : e7NetA;
-      const midLabel      = midIsStd ? "EV — standard rate" : "EV — Economy 7";
-      const midSub        = midIsStd ? "at 24p/kWh"        : "~9p overnight";
-
-      const tri = document.getElementById("tri" + s);
-      if (tri) tri.innerHTML = `
-        <div class="tc">
-          <div class="tcl">Your ${fuel}</div>
-          <div class="tcv">${fv2(fuelA)}</div>
-          <div class="tcs">current cost</div>
-        </div>
-        <div class="tc" style="border:2px solid ${GOLD_C};">
-          <div class="badge" style="background:${GOLD_C};color:white;">cheapest fixed</div>
-          <div class="tcl">${midLabel}</div>
-          <div class="tcv" style="color:${GOLD_C};">${fv2(midV)}</div>
-          <div class="tcs">${midSub}</div>
-        </div>
-        <div class="tc" style="border:2px solid #256346;">
-          <div class="badge badge-best">lowest cost</div>
-          <div class="tcl">EV — smart tariff*</div>
-          <div class="tcv" style="color:#256346;">${fv2(evNetA)}</div>
-          <div class="tcs">~7p overnight</div>
-        </div>
-      `;
-
-      const bestSaveA = fuelA - evNetA;
-      const heroIsPos = bestSaveA > 0;
-
-      const toggles = `
-        <div class="hmt-wrap">
-          <div class="hmt-bar">
-            <div class="hmt${view === "m" ? " on" : ""}" onclick="setView('m','${s}')">Monthly</div>
-            <div class="hmt${view === "a" ? " on" : ""}" onclick="setView('a','${s}')">Annual</div>
-          </div>
-        </div>`;
-
-      const hr = document.getElementById("heroResult" + s);
-      if (hr) hr.innerHTML = heroIsPos ? `
-        <div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/yr in a ${fuel}</div>
-        <div class="hv">${fv2(bestSaveA)}</div>
-        <div class="ha">${car.name} EV on a smart tariff</div>
-        ${toggles}
-      ` : `
-        <div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/yr</div>
-        <div class="hv" style="color:#eb8a49;">${fv2(Math.abs(bestSaveA))}</div>
-        <div class="hs">more per ${view === "m" ? "month" : "year"} to charge — the right tariff could narrow that gap</div>
-        <div class="ha">${car.name} EV</div>
-        ${toggles}
-      `;
-
-      const stdBarCol = cheapestFixed === "std" ? GOLD_C : "#d3b06b";
-      const e7BarCol  = cheapestFixed === "e7"  ? GOLD_C : "#d3b06b";
-      const maxV      = Math.max(fuelA, stdA) * 1.12;
-      const pct       = n => Math.min((n / maxV * 70), 70).toFixed(1);
-
-      const bc = document.getElementById("bc" + s);
-      if (bc) bc.innerHTML = `
-        <div class="bw">
-          <div class="brow">
-            <div class="bleft">⛽ ${fuel} fuel</div>
-            <div class="bright"><span class="bval">${fv2(fuelA)}</span></div>
-          </div>
-          <div class="bt"><div class="bf" style="width:${pct(fuelA)}%;background:var(--ink);"></div></div>
-        </div>
-        <div class="bw">
-          <div class="brow">
-            <div class="bleft">⚡ EV — standard rate ${stdBarCol === GOLD_C ? `<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>` : ''}</div>
-            <div class="bright"><span class="bval">${fv2(stdA)}</span></div>
-          </div>
-          <div class="bt"><div class="bf" style="width:${pct(stdA)}%;background:${stdBarCol};"></div></div>
-        </div>
-        <div class="bw">
-          <div class="brow">
-            <div class="bleft">⚡ EV — Economy 7 ${e7BarCol === GOLD_C ? `<span style="background:#b18b42;color:white;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">cheapest fixed</span>` : ''}</div>
-            <div class="bright">
-              <span class="bval">${fv2(e7NetA)}</span>
-              <span class="bchev" id="acc-e7-chev${s}" onclick="toggleAcc('acc-e7${s}')">▾</span>
-            </div>
-          </div>
-          <div class="bt"><div class="bf" style="width:${pct(e7NetA)}%;background:${e7BarCol};"></div></div>
-          <div class="acc" id="acc-e7${s}">
-            <div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 9p)</span><span>${fv2(e7CarA)}</span></div>
-            <div class="acc-row">
-              <div class="adj-label">
-                <span>Home rate adjustment</span>
-                <div class="tip-wrap" id="tip-e7${s}" onclick="toggleTip('tip-e7${s}',event)">
-                  <button class="tip-btn" type="button">i</button>
-                  <div class="tooltip">${TOOLTIP}</div>
-                </div>
-              </div>
-              <span>+${fv2(e7HomeA)}</span>
-            </div>
-            <div class="acc-row total"><span>Total</span><span>${fv2(e7NetA)}</span></div>
-          </div>
-        </div>
-        <div class="bw" style="margin-bottom:6px;">
-          <div class="brow">
-            <div class="bleft">⚡ EV — smart tariff* <span style="background:#e7f3ec;color:#256346;font-size:8px;font-weight:800;padding:2px 6px;border-radius:999px;margin-left:3px;">lowest cost</span></div>
-            <div class="bright">
-              <span class="bval">${fv2(evNetA)}</span>
-              <span class="bchev" id="acc-ev-chev${s}" onclick="toggleAcc('acc-ev${s}')">▾</span>
-            </div>
-          </div>
-          <div class="bt"><div class="bf" style="width:${pct(evNetA)}%;background:#256346;"></div></div>
-          <div class="acc" id="acc-ev${s}">
-            <div class="acc-row"><span>Car charging (${Math.round(kwhA).toLocaleString("en-GB")} kWh × 7p)</span><span>${fv2(evCarA)}</span></div>
-            <div class="acc-row">
-              <div class="adj-label">
-                <span>Home rate adjustment</span>
-                <div class="tip-wrap" id="tip-ev${s}" onclick="toggleTip('tip-ev${s}',event)">
-                  <button class="tip-btn" type="button">i</button>
-                  <div class="tooltip">${TOOLTIP}</div>
-                </div>
-              </div>
-              <span>+${fv2(evHomeA)}</span>
-            </div>
-            <div class="acc-row total"><span>Total</span><span>${fv2(evNetA)}</span></div>
-          </div>
-        </div>
-      `;
-
-      const disc = document.getElementById("disc" + s);
-      if (disc) disc.innerHTML = `All figures are indicative, based on your inputs and typical real-world efficiency. Home rate adjustments assume annual household usage of 2,700 kWh — 15% at night on Economy 7, 10% at night on a smart tariff. Fixed rate options shown for standard and Economy 7 tariffs. *A smart meter is typically required for EV smart tariffs.`;
-    }
-
-    /* ─── SYNTAX CHECK ─── */
-    // verify node can reach here: console.log("Script loaded OK");
+    renderCars();
+    renderCarsM();
+    upd();
+    updm();
   </script>
 </body>
 </html>
