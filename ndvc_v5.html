@@ -567,7 +567,7 @@
       line-height: 1.3;
     }
 
-    .calc-step.active { background: var(--blue); color: white; }
+    .calc-step.active { background: var(--amber); color: white; }
     .calc-step.done   { color: rgba(255,255,255,0.75); }
 
     /* Grid stack — all panels same cell, tallest drives height */
@@ -975,7 +975,8 @@
       width: min(calc(100vw - 32px), 600px);
       max-height: calc(100vh - 32px);
       margin: 16px auto;
-      overflow-y: auto;
+      overflow-y: scroll;
+      scrollbar-gutter: stable;
       -webkit-overflow-scrolling: touch;
       border-radius: var(--r-xl);
     }
@@ -1076,6 +1077,58 @@
     .footer-row strong { color: rgba(255,255,255,0.75); }
 
     .hide { display: none !important; }
+
+    /* ─── STEPPERS ─── */
+    .input-stepper {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+    }
+
+    .input-stepper input {
+      flex: 1;
+      border-radius: var(--r-sm) 0 0 var(--r-sm) !important;
+      border-right: none !important;
+    }
+
+    .stepper-btns {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+
+    .stepper-btns button {
+      width: 32px;
+      flex: 1;
+      border: 1.5px solid var(--line-mid);
+      background: var(--white);
+      color: var(--ink-soft);
+      font-size: 10px;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      font-family: inherit;
+      line-height: 1;
+    }
+
+    .stepper-btns button:first-child {
+      border-radius: 0 var(--r-sm) 0 0;
+      border-bottom: none;
+    }
+
+    .stepper-btns button:last-child {
+      border-radius: 0 0 var(--r-sm) 0;
+    }
+
+    .stepper-btns button:hover {
+      background: var(--blue-soft);
+      color: var(--blue);
+      border-color: var(--blue);
+    }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
@@ -1229,7 +1282,7 @@
 
         <div class="ev-intro-grid">
           <div class="ev-stat-card">
-            <div class="big-num">£126<span style="font-size:24px;opacity:0.7;">/mo</span></div>
+            <div class="big-num">£135<span style="font-size:24px;opacity:0.7;">/mo</span></div>
             <p>Potential saving switching from petrol to EV — based on 10,000 miles a year on a smart tariff. Use the calculator to see what the numbers look like for your situation.</p>
           </div>
           <div class="ev-desktop-trigger">
@@ -1263,19 +1316,21 @@
                   <div class="card">
                     <div class="r2" style="margin-bottom:11px;">
                       <div class="fld"><label>Fuel type</label><select id="fuelType" onchange="updatePPL()"><option value="diesel">Diesel</option><option value="petrol">Petrol</option></select></div>
-                      <div class="fld"><label>Pence per litre</label><input type="number" id="ppl" value="164.9" min="100" max="300" class="big" /></div>
+                      <div class="fld"><label>Pence per litre</label><div class="input-stepper"><input type="number" id="ppl" value="164.9" min="100" max="300" class="big" /><div class="stepper-btns"><button type="button" onclick="stepVal('ppl',1,1,100,300,true)">▲</button><button type="button" onclick="stepVal('ppl',-1,1,100,300,true)">▼</button></div></div></div>
                     </div>
-                    <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><input type="number" id="mpg" value="45" min="20" max="90" /></div>
+                    <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><div class="input-stepper"><input type="number" id="mpg" value="45" min="20" max="90" /><div class="stepper-btns"><button type="button" onclick="stepVal('mpg',1,1,20,90,false)">▲</button><button type="button" onclick="stepVal('mpg',-1,1,20,90,false)">▼</button></div></div></div>
                     <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel ~45 mpg · Petrol ~35 mpg</div>
                     <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
                       <div style="display:flex;gap:10px;align-items:flex-start;">
                         <div class="toggle-box">
                           <div class="tb active" id="tb-a" onclick="swm('a')">Annual</div>
                           <div class="tb"        id="tb-w" onclick="swm('w')">Weekly</div>
+                          <div class="tb"        id="tb-d" onclick="swm('d')">Daily</div>
                         </div>
                         <div style="flex:1;min-width:0;">
-                          <div id="fa" class="fld"><label>How many miles do you drive?</label><input type="text" id="mA" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /></div>
-                          <div id="fw" class="fld hide"><label>Miles per week?</label><input type="text" id="mW" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /></div>
+                          <div id="fa" class="fld"><label>How many miles do you drive?</label><div class="input-stepper"><input type="text" id="mA" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mA',500,'upd')">▲</button><button type="button" onclick="stepMiles('mA',-500,'upd')">▼</button></div></div></div>
+                          <div id="fw" class="fld hide"><label>Miles per week?</label><div class="input-stepper"><input type="text" id="mW" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mW',50,'upd')">▲</button><button type="button" onclick="stepMiles('mW',-50,'upd')">▼</button></div></div></div>
+                          <div id="fd" class="fld hide"><label>Daily miles (working days)</label><div class="input-stepper"><input type="text" id="mD" value="40" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mD',5,'upd')">▲</button><button type="button" onclick="stepMiles('mD',-5,'upd')">▼</button></div></div></div>
                           <div class="chip" id="meq" style="margin-top:6px;">833 miles/month</div>
                         </div>
                       </div>
@@ -1386,19 +1441,21 @@
               <div class="card">
                 <div class="r2" style="margin-bottom:11px;">
                   <div class="fld"><label>Fuel type</label><select id="fuelTypem" onchange="updatePPLm()"><option value="diesel">Diesel</option><option value="petrol">Petrol</option></select></div>
-                  <div class="fld"><label>Pence per litre</label><input type="number" id="pplm" value="164.9" min="100" max="300" class="big" /></div>
+                  <div class="fld"><label>Pence per litre</label><div class="input-stepper"><input type="number" id="pplm" value="164.9" min="100" max="300" class="big" /><div class="stepper-btns"><button type="button" onclick="stepVal('pplm',1,1,100,300,true)">▲</button><button type="button" onclick="stepVal('pplm',-1,1,100,300,true)">▼</button></div></div></div>
                 </div>
-                <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><input type="number" id="mpgm" value="45" min="20" max="90" /></div>
+                <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><div class="input-stepper"><input type="number" id="mpgm" value="45" min="20" max="90" /><div class="stepper-btns"><button type="button" onclick="stepVal('mpgm',1,1,20,90,false)">▲</button><button type="button" onclick="stepVal('mpgm',-1,1,20,90,false)">▼</button></div></div></div>
                 <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel ~45 mpg · Petrol ~35 mpg</div>
                 <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
                   <div style="display:flex;gap:10px;align-items:flex-start;">
                     <div class="toggle-box">
                       <div class="tb active" id="tb-am" onclick="swmm('a')">Annual</div>
                       <div class="tb"        id="tb-wm" onclick="swmm('w')">Weekly</div>
+                      <div class="tb"        id="tb-dm" onclick="swmm('d')">Daily</div>
                     </div>
                     <div style="flex:1;min-width:0;">
-                      <div id="fam" class="fld"><label>How many miles do you drive?</label><input type="text" id="mAm" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /></div>
-                      <div id="fwm" class="fld hide"><label>Miles per week?</label><input type="text" id="mWm" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /></div>
+                      <div id="fam" class="fld"><label>How many miles do you drive?</label><div class="input-stepper"><input type="text" id="mAm" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mAm',500,'updm')">▲</button><button type="button" onclick="stepMiles('mAm',-500,'updm')">▼</button></div></div></div>
+                      <div id="fwm" class="fld hide"><label>Miles per week?</label><div class="input-stepper"><input type="text" id="mWm" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mWm',50,'updm')">▲</button><button type="button" onclick="stepMiles('mWm',-50,'updm')">▼</button></div></div></div>
+                      <div id="fdm" class="fld hide"><label>Daily miles (working days)</label><div class="input-stepper"><input type="text" id="mDm" value="40" inputmode="numeric" class="big" oninput="fmtMiles(this);updm();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mDm',5,'updm')">▲</button><button type="button" onclick="stepMiles('mDm',-5,'updm')">▼</button></div></div></div>
                       <div class="chip" id="meqm" style="margin-top:6px;">833 miles/month</div>
                     </div>
                   </div>
@@ -1449,14 +1506,18 @@
 
     function fmtMiles(el){const r=el.value.replace(/[^0-9]/g,"");if(r)el.value=parseInt(r,10).toLocaleString("en-GB");}
     function f(n){return "£"+Math.round(n).toLocaleString("en-GB");}
-    function fv(n,v){return v==="m"?f(n/12)+"/m":f(n)+"/y";}
+    function fv(n,v){return v==="m"?f(n/12)+"/m":f(n)+"/yr";}
+
+    /* STEPPERS */
+    function stepVal(id,dir,step,min,max,keepDecimal){const el=document.getElementById(id);let val=parseFloat(el.value)||0;if(keepDecimal){const dec=val-Math.floor(val);val=Math.round(Math.floor(val)+dir*step)+dec;}else{val=Math.round(val+dir*step);}val=Math.max(min,Math.min(max,val));el.value=keepDecimal?val.toFixed(1):val;}
+    function stepMiles(id,step,updFn){const el=document.getElementById(id);let val=parseFloat((el.value||"0").replace(/,/g,""))||0;val=Math.max(0,val+step);el.value=val.toLocaleString("en-GB");if(updFn==="updm")updm();else upd();}
 
     /* INLINE */
     function updatePPL(){const ft=document.getElementById("fuelType").value;document.getElementById("ppl").value=PPL[ft];document.getElementById("mpg").value=ft==="diesel"?45:35;}
     function renderCars(){document.getElementById("carGrid").innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><i class="${c.fa} ico"></i><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
     function pick(id){sel=id;renderCars();renderCarsM();}
-    function swm(m){mMode=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x).classList.toggle("active",x===m);document.getElementById("f"+x).classList.toggle("hide",x!==m);});upd();}
-    function getAnnual(){return mMode==="a"?parseFloat((document.getElementById("mA").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mW").value||"200").replace(/,/g,""))||200)*52;}
+    function swm(m){mMode=m;["a","w","d"].forEach(x=>{document.getElementById("tb-"+x).classList.toggle("active",x===m);document.getElementById("f"+x).classList.toggle("hide",x!==m);});upd();}
+    function getAnnual(){const c=id=>parseFloat((document.getElementById(id).value||"0").replace(/,/g,""))||0;if(mMode==="a")return c("mA")||10000;if(mMode==="w")return(c("mW")||200)*52;return(c("mD")||40)*235;}
     function upd(){const a=getAnnual();const el=document.getElementById("meq");if(el)el.textContent=mMode==="a"?Math.round(a/12).toLocaleString("en-GB")+" miles/month":Math.round(a).toLocaleString("en-GB")+" miles/year";}
     function setView(v){view=v;if(Object.keys(R).length)renderResults();}
     function go(n){
@@ -1482,8 +1543,8 @@
     /* MODAL */
     function updatePPLm(){const ft=document.getElementById("fuelTypem").value;document.getElementById("pplm").value=PPL[ft];document.getElementById("mpgm").value=ft==="diesel"?45:35;}
     function renderCarsM(){const el=document.getElementById("carGridm");if(!el)return;el.innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><i class="${c.fa} ico"></i><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
-    function swmm(m){mModem=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x+"m").classList.toggle("active",x===m);document.getElementById("f"+x+"m").classList.toggle("hide",x!==m);});updm();}
-    function getAnnualm(){return mModem==="a"?parseFloat((document.getElementById("mAm").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mWm").value||"200").replace(/,/g,""))||200)*52;}
+    function swmm(m){mModem=m;["a","w","d"].forEach(x=>{document.getElementById("tb-"+x+"m").classList.toggle("active",x===m);document.getElementById("f"+x+"m").classList.toggle("hide",x!==m);});updm();}
+    function getAnnualm(){const c=id=>parseFloat((document.getElementById(id).value||"0").replace(/,/g,""))||0;if(mModem==="a")return c("mAm")||10000;if(mModem==="w")return(c("mWm")||200)*52;return(c("mDm")||40)*235;}
     function updm(){const a=getAnnualm();const el=document.getElementById("meqm");if(el)el.textContent=mModem==="a"?Math.round(a/12).toLocaleString("en-GB")+" miles/month":Math.round(a).toLocaleString("en-GB")+" miles/year";}
     function setViewm(v){viewm=v;if(Object.keys(Rm).length)renderResultsM();}
     function gom(n){
@@ -1525,8 +1586,8 @@
       const toggles=`<div class="hmt-wrap"><div class="hmt-bar"><div class="hmt${v==="m"?" on":""}" onclick="${svFn}('m')">Monthly</div><div class="hmt${v==="a"?" on":""}" onclick="${svFn}('a')">Annual</div></div></div>`;
       const hrEl=q("heroResult"+idSfx);
       if(hrEl)hrEl.innerHTML=pos
-        ?`<div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/y in a ${fuel}</div><div class="hv">${fv(bestSave,v)}</div><div class="ha">${car.name} EV on a smart tariff</div>${toggles}`
-        :`<div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/y</div><div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSave),v)}</div><div class="hs">more per ${v==="m"?"month":"year"} to charge — the right tariff could narrow that gap</div><div class="ha">${car.name} EV</div>${toggles}`;
+        ?`<div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles a year in a ${fuel}</div><div class="hv">${fv(bestSave,v)}</div><div class="ha">${car.name} EV on a smart tariff</div>${toggles}`
+        :`<div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles a year</div><div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSave),v)}</div><div class="hs">more per ${v==="m"?"month":"year"} to charge — the right tariff could narrow that gap</div><div class="ha">${car.name} EV</div>${toggles}`;
       const stCol=cheapest==="std"?GC:"#d3b06b",e7Col=cheapest==="e7"?GC:"#d3b06b";
       const maxV=Math.max(fuelA,stdA)*1.12,pct=n=>Math.min(n/maxV*70,70).toFixed(1);
       const bcEl=q("bc"+idSfx);
@@ -1544,12 +1605,4 @@
     function toggleAcc(id){const a=document.getElementById(id),c=document.getElementById(id+"-chev");if(!a)return;const o=a.classList.contains("open");a.classList.toggle("open",!o);if(c)c.classList.toggle("open",!o);}
     function toggleBigAcc(id,btnId){const a=document.getElementById(id),b=document.getElementById(btnId);if(!a)return;const o=a.classList.contains("open");a.classList.toggle("open",!o);if(b){b.classList.toggle("open",!o);b.querySelector("span:first-child").textContent=o?"Show full cost breakdown":"Hide full cost breakdown";}}
     function toggleTip(id,e){if(e)e.stopPropagation();document.querySelectorAll(".tip-wrap.show").forEach(el=>{if(el.id!==id)el.classList.remove("show");});const el=document.getElementById(id);if(el)el.classList.toggle("show");}
-    document.addEventListener("click",()=>document.querySelectorAll(".tip-wrap.show").forEach(el=>el.classList.remove("show")));
-
-    renderCars();
-    renderCarsM();
-    upd();
-    updm();
-  </script>
-</body>
-</html>
+    document.addEventListener("click",()=>document.querySelectorAll(".
