@@ -1449,7 +1449,7 @@
 
     function fmtMiles(el){const r=el.value.replace(/[^0-9]/g,"");if(r)el.value=parseInt(r,10).toLocaleString("en-GB");}
     function f(n){return "£"+Math.round(n).toLocaleString("en-GB");}
-    function fv(n,v){return v==="m"?f(n/12)+"/m":f(n)+"/yr";}
+    function fv(n,v){return v==="m"?f(n/12)+"/m":f(n)+"/y";}
 
     /* INLINE */
     function updatePPL(){const ft=document.getElementById("fuelType").value;document.getElementById("ppl").value=PPL[ft];document.getElementById("mpg").value=ft==="diesel"?45:35;}
@@ -1525,8 +1525,8 @@
       const toggles=`<div class="hmt-wrap"><div class="hmt-bar"><div class="hmt${v==="m"?" on":""}" onclick="${svFn}('m')">Monthly</div><div class="hmt${v==="a"?" on":""}" onclick="${svFn}('a')">Annual</div></div></div>`;
       const hrEl=q("heroResult"+idSfx);
       if(hrEl)hrEl.innerHTML=pos
-        ?`<div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/yr in a ${fuel}</div><div class="hv">${fv(bestSave,v)}</div><div class="ha">${car.name} EV on a smart tariff</div>${toggles}`
-        :`<div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/yr</div><div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSave),v)}</div><div class="hs">more per ${v==="m"?"month":"year"} to charge — the right tariff could narrow that gap</div><div class="ha">${car.name} EV</div>${toggles}`;
+        ?`<div class="hl">Estimated saving — ${Math.round(annual).toLocaleString("en-GB")} miles/y in a ${fuel}</div><div class="hv">${fv(bestSave,v)}</div><div class="ha">${car.name} EV on a smart tariff</div>${toggles}`
+        :`<div class="hl">Compared with your ${fuel} — ${Math.round(annual).toLocaleString("en-GB")} miles/y</div><div class="hv" style="color:#eb8a49;">${fv(Math.abs(bestSave),v)}</div><div class="hs">more per ${v==="m"?"month":"year"} to charge — the right tariff could narrow that gap</div><div class="ha">${car.name} EV</div>${toggles}`;
       const stCol=cheapest==="std"?GC:"#d3b06b",e7Col=cheapest==="e7"?GC:"#d3b06b";
       const maxV=Math.max(fuelA,stdA)*1.12,pct=n=>Math.min(n/maxV*70,70).toFixed(1);
       const bcEl=q("bc"+idSfx);
