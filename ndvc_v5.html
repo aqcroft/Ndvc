@@ -8,6 +8,7 @@
   <meta name="description" content="Independent car buying advice, EV guidance and bespoke vehicle sourcing from ND Vehicle Consultancy." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     /* ─── TOKENS ─── */
@@ -674,7 +675,7 @@
 
     .cbtn:hover { border-color: rgba(98,93,165,0.32); transform: translateY(-1px); }
     .cbtn.sel { border-color: var(--blue); background: var(--blue-soft); }
-    .cbtn .ico { font-size: 24px; color: var(--ink-soft); margin-bottom: 7px; display: block; transition: color 0.18s; }
+    .cbtn .ico { font-size: 26px; display: block; color: var(--ink-soft); margin-bottom: 7px; transition: color 0.18s; }
     .cbtn.sel .ico { color: var(--blue); }
     .cbtn .cn { display: block; font-size: 12px; font-weight: 700; line-height: 1.3; color: var(--ink); }
     .cbtn .ce { display: block; margin-top: 3px; font-size: 10px; color: var(--ink-soft); line-height: 1.4; }
@@ -1434,10 +1435,10 @@
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const CARS=[
-      {id:"hatch",name:"Family hatchback",eg:"VW ID.3, Nissan Leaf",      mpk:3.8,ico:"🚗"},
-      {id:"exec", name:"Executive saloon", eg:"Tesla Model 3, BMW i4",     mpk:3.5,ico:"🚘"},
-      {id:"suv",  name:"Family SUV",       eg:"VW ID.4, Hyundai IONIQ 5",  mpk:3.2,ico:"🚙"},
-      {id:"large",name:"Large SUV / 7-seat",eg:"Tesla Model Y, Kia EV9",   mpk:2.8,ico:"🚐"}
+      {id:"hatch",name:"Family hatchback",eg:"VW ID.3, Nissan Leaf",      mpk:3.8,fa:"fa-solid fa-car-side"},
+      {id:"exec", name:"Executive saloon", eg:"Tesla Model 3, BMW i4",     mpk:3.5,fa:"fa-solid fa-car-rear"},
+      {id:"suv",  name:"Family SUV",       eg:"VW ID.4, Hyundai IONIQ 5",  mpk:3.2,fa:"fa-solid fa-truck-pickup"},
+      {id:"large",name:"Large SUV / 7-seat",eg:"Tesla Model Y, Kia EV9",   mpk:2.8,fa:"fa-solid fa-van-shuttle"}
     ];
     const PPL={diesel:164.9,petrol:142.9},STD_P=24,E7_NIGHT=9,E7_DAY=34,EV_NIGHT=7,EV_DAY=30,HOME_KWH=2700;
     const TOOLTIP="Overnight charging is cheaper — but daytime electricity costs more on this plan. Both effects are included here.";
@@ -1453,7 +1454,7 @@
 
     /* INLINE */
     function updatePPL(){const ft=document.getElementById("fuelType").value;document.getElementById("ppl").value=PPL[ft];document.getElementById("mpg").value=ft==="diesel"?45:35;}
-    function renderCars(){document.getElementById("carGrid").innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><span class="ico">${c.ico}</span><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
+    function renderCars(){document.getElementById("carGrid").innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><i class="${c.fa} ico"></i><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
     function pick(id){sel=id;renderCars();renderCarsM();}
     function swm(m){mMode=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x).classList.toggle("active",x===m);document.getElementById("f"+x).classList.toggle("hide",x!==m);});upd();}
     function getAnnual(){return mMode==="a"?parseFloat((document.getElementById("mA").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mW").value||"200").replace(/,/g,""))||200)*52;}
@@ -1481,7 +1482,7 @@
 
     /* MODAL */
     function updatePPLm(){const ft=document.getElementById("fuelTypem").value;document.getElementById("pplm").value=PPL[ft];document.getElementById("mpgm").value=ft==="diesel"?45:35;}
-    function renderCarsM(){const el=document.getElementById("carGridm");if(!el)return;el.innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><span class="ico">${c.ico}</span><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
+    function renderCarsM(){const el=document.getElementById("carGridm");if(!el)return;el.innerHTML=CARS.map(c=>`<div class="cbtn${sel===c.id?" sel":""}" onclick="pick('${c.id}')"><i class="${c.fa} ico"></i><span class="cn">${c.name}</span><span class="ce">${c.eg}</span><span class="ck">~${c.mpk} mi/kWh</span></div>`).join("");}
     function swmm(m){mModem=m;["a","w"].forEach(x=>{document.getElementById("tb-"+x+"m").classList.toggle("active",x===m);document.getElementById("f"+x+"m").classList.toggle("hide",x!==m);});updm();}
     function getAnnualm(){return mModem==="a"?parseFloat((document.getElementById("mAm").value||"10000").replace(/,/g,""))||10000:(parseFloat((document.getElementById("mWm").value||"200").replace(/,/g,""))||200)*52;}
     function updm(){const a=getAnnualm();const el=document.getElementById("meqm");if(el)el.textContent=mModem==="a"?Math.round(a/12).toLocaleString("en-GB")+" miles/month":Math.round(a).toLocaleString("en-GB")+" miles/year";}
