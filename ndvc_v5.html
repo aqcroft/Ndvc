@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -799,7 +800,7 @@
       line-height: 1.3;
     }
 
-    .hmt.on { background: rgba(255,255,255,0.22); color: white; }
+    .hmt.on { background: var(--amber); color: white; }
 
     .big-acc-toggle {
       display: flex;
@@ -1402,7 +1403,7 @@
           <div class="cta-actions">
             <a class="btn btn-wa" id="cta-wa" href="https://wa.me/447918052183" target="_blank" rel="noopener">WhatsApp</a>
             <a class="btn btn-call" href="tel:+447918052183">Call</a>
-            <a class="btn btn-ghost-light" id="cta-email" href="mailto:ndvcltd@gmail.com">Email</a>
+            <a class="btn btn-ghost-light" id="cta-email" href="/cdn-cgi/l/email-protection#620c0614010e160622050f030b0e4c010d0f">Email</a>
             <label id="calc-share-wrap" style="display:none;align-items:center;gap:8px;cursor:pointer;width:100%;margin-top:6px;">
               <input type="checkbox" id="calc-share-cb" onchange="toggleCalcShare()" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;"/>
               <span style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.4;">Include my EV calculator results in the message</span>
@@ -1513,7 +1514,7 @@
     </div>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     const CARS=[
       {id:"hatch",name:"Family hatchback",eg:"VW ID.3, Nissan Leaf",      mpk:3.8,fa:"fa-solid fa-car-side"},
       {id:"exec", name:"Executive saloon", eg:"Tesla Model 3, BMW i4",     mpk:3.5,fa:"fa-solid fa-car-rear"},
@@ -1560,7 +1561,7 @@
 
     function buildMsg(data,mpgVal,pplVal){
       const {car,fuel,annual,stdA,e7NetA,evNetA}=data;
-      const smartM=Math.round(evNetA/12),fixedM=Math.round(Math.min(stdA,e7NetA)/12),stdM=Math.round(stdA/12);
+      const smartM=Math.round((fuelA-evNetA)/12),fixedM=Math.round((fuelA-Math.min(stdA,e7NetA))/12),stdM=Math.round((fuelA-stdA)/12);
       const svc=getService();
       return "Hi Nick,\n\nI used your EV calculator and I'd like to chat about converting to EV.\n\n"
         +"Here's my EV Calculator input / output:\n"
