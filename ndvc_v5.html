@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -336,16 +335,23 @@
 
     .service-card:hover { transform: translateY(-2px); }
 
+    .service-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
     .service-icon {
       font-size: 24px;
-      margin-bottom: 16px;
+      flex-shrink: 0;
     }
 
     .service-card h3 {
       font-size: 18px;
       font-weight: 700;
       color: var(--gold);
-      margin-bottom: 10px;
+      margin-bottom: 0;
       line-height: 1.25;
     }
 
@@ -1219,22 +1225,19 @@
 
         <div class="cards-3">
           <article class="service-card">
-            <div class="service-icon">⚡</div>
-            <h3>ICE to EV guidance</h3>
+            <div class="service-card-title"><div class="service-icon">⚡</div><h3>ICE to EV guidance</h3></div>
             <p>Clear, independent advice on whether petrol, diesel, hybrid or electric is the right fit for how you actually use your car.</p>
             <span class="price-pill">Typical price: £145</span>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">🚗</div>
-            <h3>Personal car finding</h3>
+            <div class="service-card-title"><div class="service-icon">🚗</div><h3>Personal car finding</h3></div>
             <p>A tailored search service to help you find the right car for your budget, lifestyle and preferences — without dealership pressure.</p>
             <span class="price-pill">Typical price: £395</span>
           </article>
 
           <article class="service-card">
-            <div class="service-icon">🔎</div>
-            <h3>Bespoke vehicle sourcing</h3>
+            <div class="service-card-title"><div class="service-icon">🔎</div><h3>Bespoke vehicle sourcing</h3></div>
             <p>From everyday family cars to harder-to-find specialist vehicles, with support from initial brief through to handover.</p>
             <span class="price-pill">Starting from £1,500</span>
           </article>
@@ -1397,9 +1400,30 @@
             <p>Whether you're replacing the family car, curious about EV, or looking for something specialist — I offer independent advice and a genuinely personal way to buy.</p>
           </div>
           <div class="cta-actions">
-            <a class="btn btn-wa" href="https://wa.me/447918052183">WhatsApp</a>
+            <a class="btn btn-wa" id="cta-wa" href="https://wa.me/447918052183" target="_blank" rel="noopener">WhatsApp</a>
             <a class="btn btn-call" href="tel:+447918052183">Call</a>
-            <a class="btn btn-ghost-light" href="/cdn-cgi/l/email-protection#751b110316190111351218141c195b161a18">Email</a>
+            <a class="btn btn-ghost-light" id="cta-email" href="mailto:ndvcltd@gmail.com">Email</a>
+            <label id="calc-share-wrap" style="display:none;align-items:center;gap:8px;cursor:pointer;width:100%;margin-top:6px;">
+              <input type="checkbox" id="calc-share-cb" onchange="toggleCalcShare()" style="width:16px;height:16px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;"/>
+              <span style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.4;">Include my EV calculator results in the message</span>
+            </label>
+            <div style="width:100%;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.12);">
+              <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">I'm interested in</div>
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <label style="display:flex;align-items:center;gap:9px;cursor:pointer;">
+                  <input type="radio" name="svc" value="⚡ ICE to EV guidance" onchange="toggleCalcShare()" checked style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;"/>
+                  <span style="font-size:13px;color:rgba(255,255,255,0.80);">⚡ ICE to EV guidance</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:9px;cursor:pointer;">
+                  <input type="radio" name="svc" value="🚗 Personal car finding" onchange="toggleCalcShare()" style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;"/>
+                  <span style="font-size:13px;color:rgba(255,255,255,0.80);">🚗 Personal car finding</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:9px;cursor:pointer;">
+                  <input type="radio" name="svc" value="🔎 Bespoke vehicle sourcing" onchange="toggleCalcShare()" style="accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;"/>
+                  <span style="font-size:13px;color:rgba(255,255,255,0.80);">🔎 Bespoke vehicle sourcing</span>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1489,7 +1513,7 @@
     </div>
   </div>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     const CARS=[
       {id:"hatch",name:"Family hatchback",eg:"VW ID.3, Nissan Leaf",      mpk:3.8,fa:"fa-solid fa-car-side"},
       {id:"exec", name:"Executive saloon", eg:"Tesla Model 3, BMW i4",     mpk:3.5,fa:"fa-solid fa-car-rear"},
@@ -1525,6 +1549,76 @@
       ["p1","p2","p3"].forEach((id,i)=>{const el=document.getElementById(id);if(!el)return;el.classList.remove("active","done");if(i+1<n)el.classList.add("done");if(i+1===n)el.classList.add("active");});
       if(n===3)calcAndRender();
     }
+    /* CONTACT PRE-FILL */
+    const BASE_WA="https://wa.me/447918052183";
+    const BASE_EMAIL="mailto:ndvcltd@gmail.com";
+
+    function getService(){
+      const checked=document.querySelector('input[name="svc"]:checked');
+      return checked?checked.value:"";
+    }
+
+    function buildMsg(data,mpgVal,pplVal){
+      const {car,fuel,annual,stdA,e7NetA,evNetA}=data;
+      const smartM=Math.round(evNetA/12),fixedM=Math.round(Math.min(stdA,e7NetA)/12),stdM=Math.round(stdA/12);
+      const svc=getService();
+      return "Hi Nick,\n\nI used your EV calculator and I'd like to chat about converting to EV.\n\n"
+        +"Here's my EV Calculator input / output:\n"
+        +fuel.charAt(0).toUpperCase()+fuel.slice(1)+", "+Math.round(annual).toLocaleString("en-GB")+" miles/year, "
+        +mpgVal+" MPG, "+pplVal+"p/l\n"
+        +"EV: "+car.name+"\n"
+        +"Potential EV Tariff Savings: £"+smartM+"/m smart; £"+fixedM+"/m Fixed; £"+stdM+"/m Standard"
+        +(svc?"\n\nI'm interested in: "+svc:"");
+    }
+
+    function buildSimpleMsg(){
+      const svc=getService();
+      return "Hi Nick,\n\nI was on your website and I'd like some help with my next car."
+        +(svc?"\n\nI'm interested in: "+svc:"")
+        +"\n\nCould we have a chat?";
+    }
+
+    function applyLinks(waUrl,emailUrl){
+      const wa=document.getElementById("cta-wa");
+      const em=document.getElementById("cta-email");
+      if(wa)wa.href=waUrl;
+      if(em)em.href=emailUrl;
+    }
+
+    function applySimpleLinks(){
+      const msg=buildSimpleMsg();
+      applyLinks(
+        BASE_WA+"?text="+encodeURIComponent(msg),
+        BASE_EMAIL+"?subject="+encodeURIComponent("NDVC Website Enquiry")+"&body="+encodeURIComponent(msg)
+      );
+    }
+
+    function toggleCalcShare(){
+      const cb=document.getElementById("calc-share-cb");
+      const data=Object.keys(R).length?R:(Object.keys(Rm).length?Rm:null);
+      if(!data||!(cb&&cb.checked)){applySimpleLinks();return;}
+      const isInline=Object.keys(R).length>0;
+      const mpgVal=document.getElementById(isInline?"mpg":"mpgm").value;
+      const pplVal=document.getElementById(isInline?"ppl":"pplm").value;
+      const msg=buildMsg(data,mpgVal,pplVal);
+      applyLinks(
+        BASE_WA+"?text="+encodeURIComponent(msg),
+        BASE_EMAIL+"?subject="+encodeURIComponent("EV Calculator Enquiry")+"&body="+encodeURIComponent(msg)
+      );
+    }
+
+    function buildContactLinks(data){
+      const wrap=document.getElementById("calc-share-wrap");
+      const cb=document.getElementById("calc-share-cb");
+      if(wrap)wrap.style.display="flex";
+      if(cb)cb.checked=true;
+      toggleCalcShare();
+    }
+    function buildContactLinksM(data){ buildContactLinks(data); }
+
+    // apply simple message on page load
+    applySimpleLinks();
+
     function calcAndRender(){
       const car=CARS.find(c=>c.id===sel)||CARS[0];
       const ppl=parseFloat(document.getElementById("ppl").value)||164.9;
@@ -1537,6 +1631,7 @@
       const evCarA=kwhA*(EV_NIGHT/100),evHomeA=(HOME_KWH*0.90*(EV_DAY/100))+(HOME_KWH*0.10*(EV_NIGHT/100))-(HOME_KWH*(STD_P/100)),evNetA=evCarA+evHomeA;
       R={car,fuel,annual,kwhA,fuelA,stdA,e7NetA,e7CarA,e7HomeA,evNetA,evCarA,evHomeA};
       renderResults();
+      buildContactLinks(R);
     }
     function renderResults(){_render(R,view,"","");}
 
@@ -1564,6 +1659,7 @@
       const evCarA=kwhA*(EV_NIGHT/100),evHomeA=(HOME_KWH*0.90*(EV_DAY/100))+(HOME_KWH*0.10*(EV_NIGHT/100))-(HOME_KWH*(STD_P/100)),evNetA=evCarA+evHomeA;
       Rm={car,fuel,annual,kwhA,fuelA,stdA,e7NetA,e7CarA,e7HomeA,evNetA,evCarA,evHomeA};
       renderResultsM();
+      buildContactLinksM(Rm);
     }
     function renderResultsM(){_render(Rm,viewm,"m","m");}
 
