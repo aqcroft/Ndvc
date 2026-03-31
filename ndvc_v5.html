@@ -1560,16 +1560,17 @@
     }
 
     function buildMsg(data,mpgVal,pplVal){
-      const {car,fuel,annual,stdA,e7NetA,evNetA}=data;
+      const {car,fuel,annual,fuelA,stdA,e7NetA,evNetA}=data;
       const smartM=Math.round((fuelA-evNetA)/12),fixedM=Math.round((fuelA-Math.min(stdA,e7NetA))/12),stdM=Math.round((fuelA-stdA)/12);
       const svc=getService();
-      return "Hi Nick,\n\nI used your EV calculator and I'd like to chat about converting to EV.\n\n"
-        +"Here's my EV Calculator input / output:\n"
+      return "Hi Nick,\n\nI used your EV calculator and I'd like to chat about my next car.\n\n"
+        +"EV Calculator results:\n"
         +fuel.charAt(0).toUpperCase()+fuel.slice(1)+", "+Math.round(annual).toLocaleString("en-GB")+" miles/year, "
         +mpgVal+" MPG, "+pplVal+"p/l\n"
         +"EV: "+car.name+"\n"
         +"Potential EV Tariff Savings: £"+smartM+"/m smart; £"+fixedM+"/m Fixed; £"+stdM+"/m Standard"
-        +(svc?"\n\nI'm interested in: "+svc:"");
+        +(svc?"\n\nI'm interested in: "+svc:"")
+        +"\n\nCould we have a chat?";
     }
 
     function buildSimpleMsg(){
