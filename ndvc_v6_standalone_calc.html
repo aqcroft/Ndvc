@@ -1,0 +1,95 @@
+  <!-- Mobile inline calculator -->
+        <div class="ev-inline">
+          <div style="border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-xl);border:1px solid var(--line);background:#f2f1f0;">
+            <div class="calc-hdr">
+              <div class="calc-hdr-top">
+                <div><h2>EV Running Cost Calculator</h2><p>Compare your current car with a likely EV alternative</p></div>
+                <img src="assets/NDVC_square.webp" alt="ND Vehicle Consultancy" />
+              </div>
+              <div class="calc-steps">
+                <div class="calc-step active" id="p1" onclick="go(1)">1. Your Car &amp; Mileage</div>
+                <div class="calc-step"        id="p2" onclick="go(2)">2. Your EV Choice</div>
+                <div class="calc-step"        id="p3" onclick="go(3)">3. Your Potential Savings</div>
+              </div>
+            </div>
+            <div class="calc-body">
+              <div class="calc-body-inner">
+
+                <!-- STEP 1 inline -->
+                <div class="calc-panel active" id="s1">
+                  <div class="slbl">Tell us about your current car</div>
+                  <div class="card">
+                    <div class="r2" style="margin-bottom:11px;">
+                      <div class="fld"><label>Fuel type</label><select id="fuelType" onchange="updatePPL()"><option value="diesel">Diesel</option><option value="petrol">Petrol</option></select></div>
+                      <div class="fld"><label>Pence per litre</label><div class="input-stepper"><input type="number" id="ppl" value="164.9" min="100" max="300" class="big" /><div class="stepper-btns"><button type="button" onclick="stepVal('ppl',1,1,100,300,true)">▲</button><button type="button" onclick="stepVal('ppl',-1,1,100,300,true)">▼</button></div></div></div>
+                    </div>
+                    <div class="fld" style="margin-bottom:11px;"><label>MPG — your car's fuel economy</label><div class="input-stepper"><input type="number" id="mpg" value="45" min="20" max="90" /><div class="stepper-btns"><button type="button" onclick="stepVal('mpg',1,1,20,90,false)">▲</button><button type="button" onclick="stepVal('mpg',-1,1,20,90,false)">▼</button></div></div></div>
+                    <div class="chip" style="margin-bottom:11px;">💡 Not sure? Diesel ~45 mpg · Petrol ~35 mpg</div>
+                    <div class="card" style="margin-bottom:0;background:white;border:1px solid var(--line);">
+                      <div style="display:flex;gap:10px;align-items:flex-start;">
+                        <div class="toggle-box">
+                          <div class="tb active" id="tb-a" onclick="swm('a')">Annual</div>
+                          <div class="tb"        id="tb-w" onclick="swm('w')">Weekly</div>
+                          <div class="tb"        id="tb-d" onclick="swm('d')">Daily</div>
+                        </div>
+                        <div style="flex:1;min-width:0;">
+                          <div id="fa" class="fld"><label>How many miles do you drive?</label><div class="input-stepper"><input type="text" id="mA" value="10,000" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mA',500,'upd')">▲</button><button type="button" onclick="stepMiles('mA',-500,'upd')">▼</button></div></div></div>
+                          <div id="fw" class="fld hide"><label>Miles per week?</label><div class="input-stepper"><input type="text" id="mW" value="200" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mW',50,'upd')">▲</button><button type="button" onclick="stepMiles('mW',-50,'upd')">▼</button></div></div></div>
+                          <div id="fd" class="fld hide"><label>Daily miles (working days)</label><div class="input-stepper"><input type="text" id="mD" value="40" inputmode="numeric" class="big" oninput="fmtMiles(this);upd();" /><div class="stepper-btns"><button type="button" onclick="stepMiles('mD',5,'upd')">▲</button><button type="button" onclick="stepMiles('mD',-5,'upd')">▼</button></div></div></div>
+                          <div class="chip" id="meq" style="margin-top:6px;">833 miles/month</div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- ADVANCED -->
+                    <div class="adv-toggle" id="adv-toggle" onclick="toggleAdv('adv-body','adv-toggle')">
+                      <span>⚙ Advanced</span>
+                      <span class="adv-chev">▾</span>
+                    </div>
+                    <div class="adv-body" id="adv-body">
+                      <div class="fld">
+                        <label>Annual household electricity usage (kWh)</label>
+                        <div class="input-stepper">
+                          <input type="number" id="homeKwh" value="2700" min="1000" max="6000" step="100" />
+                          <div class="stepper-btns">
+                            <button type="button" onclick="stepVal('homeKwh',100,100,1000,6000,false)">▲</button>
+                            <button type="button" onclick="stepVal('homeKwh',-100,100,1000,6000,false)">▼</button>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="adv-hint">UK average is 2,700 kWh/year. This affects the home rate adjustment on Economy 7 and smart tariff calculations.</p>
+                    </div>
+                  </div>
+                  <button class="btnp" onclick="go(2)">Next: Your EV Choice</button>
+                </div>
+
+                <!-- STEP 2 inline -->
+                <div class="calc-panel" id="s2">
+                  <div class="slbl">What EV are you considering?</div>
+                  <div class="cgrid" id="carGrid"></div>
+                  <div class="chip" style="margin-bottom:13px;">Efficiency figures are typical real-world estimates</div>
+                  <button class="btnp" onclick="go(3)">See your potential savings</button>
+                </div>
+
+                <!-- STEP 3 inline -->
+                <div class="calc-panel" id="s3">
+                  <div class="tri" id="tri"></div>
+                  <div id="heroResult" class="hero-result"></div>
+                  <div class="big-acc-toggle" id="bc-toggle" onclick="toggleBigAcc('bc','bc-toggle')"><span>Show full cost breakdown</span><span class="chev">▾</span></div>
+                  <div id="bc" class="bc acc" style="display:none;"></div>
+                  <div class="uw-bridge">
+                    <div class="uw-bridge-text">I've partnered with Utility Warehouse to offer EV smart tariffs alongside other household services. <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener">Find out more</a></div>
+                    <a href="https://connectors.uw.co.uk/CN-8RVO" target="_blank" rel="noopener"><img src="assets/UW_logo.webp" alt="Utility Warehouse" class="uw-bridge-logo" /></a>
+                  </div>
+                  <div style="text-align:center;padding:4px 0 6px;">
+                    <a href="#contact" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;background:var(--blue);color:white;border-radius:var(--r-md);font-size:14px;font-weight:700;text-decoration:none;margin-bottom:4px;">Get in touch ↓</a>
+                  </div>
+                  <div class="disc" id="disc"></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
